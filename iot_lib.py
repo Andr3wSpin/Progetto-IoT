@@ -233,7 +233,12 @@ class OLED:
         Riempe il display del colore specificato
         """
         self.display.fill(color)
-
+    def show_image (image):    
+        fb = framebuf.FrameBuffer(image, 128, 64, framebuf.MONO_HLSB)
+        display.fill(0)
+        display.blit(fb, 8, 0)
+        display.show()
+        utime.sleep_ms(500)
     def show_text(self, text: str, x: float=0.5, y: float=0.5, font_width: int=8, font_height: int=8, clear: bool=True):
         """
         Mostra `text` sul display:
