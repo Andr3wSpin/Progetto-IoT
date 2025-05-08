@@ -5,8 +5,10 @@ DHT22: 1
 MAX98357A: 3
 Camera: 14
 PN532: 2 I2C oppure 4 SPI
+DISPLAY OLED: 2 I2C
 
-totale: 28 oppure 30
+totale: 30 oppure 32
 
 
-I pin I2C possono essere scelti liberamente, i pin SPI devono essere compatibili
+I pin I2C possono essere scelti liberamente, i pin SPI devono essere compatibili.
+È possibile collegare 2 dispositivi agli stessi pin I2C se questi hanno indirizzi diversi!!
