@@ -1,6 +1,8 @@
-from machine import ADC, Pin, PWM
+from machine import ADC, Pin, PWM, I2C
 from time import sleep, sleep_ms
 from utime import sleep as sleep_us
+import ssd1306
+import framebuf
 
 
 class Utility:
@@ -210,3 +212,51 @@ class STEP_MOTOR_FULL:
                 pin_value = self.step_sequence[self.step_index][pin_index] 
                 self.stepper_pins[pin_index].value(pin_value)
             sleep_us(delay_ptr.value)
+
+
+class OLED:
+    def __init__(self, scl_pin: int, sda_pin: int, width: int = 128, height: int = 64):
+        """
+        :param scl_pin: numero del pin SCL
+        :param sda_pin: numero del pin SDA
+        :param width: larghezza display in pixel
+        :param height: altezza display in pixel
+        """
+        self.width = width
+        self.height = height
+
+        i2c = I2C(0, scl=Pin(scl_pin), sda=Pin(sda_pin))
+        self.display = ssd1306.SSD1306_I2C(width, height, i2c)
+
+    def show_text(self, text: str, x: float=0.5, y: float=0.5, font_width: int=8, font_height: int=8, clear: bool=True):
+        """
+        Mostra `text` sul display:
+         - text: stringa da visualizzare
+         - x: posizione orizzontale normalizzata da 0.0 a 1.0
+         - y: posizione verticale   normalizzata da 0.0 a 1.0
+         - font_width: larghezza di un carattere in pixel (>0)
+         - font_height: altezza di un carattere in pixel (>0)
+         - clear: se True pulisce lo schermo prima
+        """
+        # Controlli parametri
+        if not (0.0 <= x <= 1.0):
+            raise ValueError(f"x deve essere fra 0.0 e 1.0, {x} non valido")
+        if not (0.0 <= y <= 1.0):
+            raise ValueError(f"y deve essere fra 0.0 e 1.0, {y} non valido")
+        if font_width <= 0 or font_height <= 0:
+            raise ValueError("font_width e font_height devono essere > 0")
+
+        if clear:
+            self.display.fill(0)
+
+        text_w = len(text) * font_width
+        text_h = font_height
+
+        x_px = int((self.width - text_w) * x)
+        y_px = int((self.height - text_h) * y)
+
+        x_px = min(max(0, x_px), max(0, self.width - text_w))
+        y_px = min(max(0, y_px), max(0, self.height - text_h))
+
+        self.display.text(text, x_px, y_px, 1)
+        self.display.show()
