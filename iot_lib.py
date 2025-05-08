@@ -228,6 +228,12 @@ class OLED:
         i2c = I2C(0, scl=Pin(scl_pin), sda=Pin(sda_pin))
         self.display = ssd1306.SSD1306_I2C(width, height, i2c)
 
+    def fill(self, color: int=0):
+        """
+        Riempe il display del colore specificato
+        """
+        self.display.fill(color)
+
     def show_text(self, text: str, x: float=0.5, y: float=0.5, font_width: int=8, font_height: int=8, clear: bool=True):
         """
         Mostra `text` sul display:
@@ -247,7 +253,7 @@ class OLED:
             raise ValueError("font_width e font_height devono essere > 0")
 
         if clear:
-            self.display.fill(0)
+            self.fill()
 
         text_w = len(text) * font_width
         text_h = font_height
