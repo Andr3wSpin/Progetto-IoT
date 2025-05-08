@@ -214,6 +214,7 @@ class STEP_MOTOR_FULL:
             sleep_us(delay_ptr.value)
 
 
+#pin sicuri: SCL_PIN = 22 SDA_PIN = 21
 class OLED:
     def __init__(self, scl_pin: int, sda_pin: int, width: int = 128, height: int = 64):
         """
