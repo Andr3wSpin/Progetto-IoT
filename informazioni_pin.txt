@@ -6,5 +6,7 @@ MAX98357A: 3
 Camera: 14
 PN532: 2 I2C oppure 4 SPI
 
-
 totale: 28 oppure 30
+
+
+I pin I2C possono essere scelti liberamente, i pin SPI devono essere compatibili

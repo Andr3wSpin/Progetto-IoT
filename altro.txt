@@ -1,0 +1,2 @@
+nfc example: https://pastebin.com/srXtc6rH
+don't forget to set the dipswitches to set communication to SPI mode on PN532. 
