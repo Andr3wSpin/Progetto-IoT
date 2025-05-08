@@ -118,7 +118,7 @@ class POTENTIOMETER:
     #2.5dB : 0-1.5V
     #6dB : 0-2.2V
     #11dB : 0-3.6V
-    def __init__(self, sig_pin: int, mode=Pin.IN, attn: int=ADC.ATTN_11DB, max_v: float=3.3 ,resolution=4095):   #4095 rapresentable values for 12 bit resolution
+    def __init__(self, sig_pin: int, mode=Pin.IN, attn: int=ADC.ATTN_11DB, max_v: float=3.3 ,resolution: int=4095):   #4095 rapresentable values for 12 bit resolution
         if max_v <= 0:
             raise Exception('Min value is greater or equal to max value')
         self.max_v = max_v
@@ -215,31 +215,35 @@ class STEP_MOTOR_FULL:
 
 
 #pin sicuri: SCL_PIN = 22 SDA_PIN = 21
-class OLED:
-    def __init__(self, scl_pin: int, sda_pin: int, width: int = 128, height: int = 64):
+class DisplayUI:
+    def __init__(self, scl_pin: int, sda_pin: int, i2c_id: int=0, width: int=128, height: int=64):
         """
-        :param scl_pin: numero del pin SCL
-        :param sda_pin: numero del pin SDA
-        :param width: larghezza display in pixel
-        :param height: altezza display in pixel
+        :scl_pin: numero del pin SCL
+        :sda_pin: numero del pin SDA
+        :width: larghezza display in pixel
+        :height: altezza display in pixel
         """
         self.width = width
         self.height = height
 
-        i2c = I2C(0, scl=Pin(scl_pin), sda=Pin(sda_pin))
+        i2c = I2C(i2c_id, scl=Pin(scl_pin), sda=Pin(sda_pin))
         self.display = ssd1306.SSD1306_I2C(width, height, i2c)
 
-    def fill(self, color: int=0):
+    def show_image(self, image: bytearray, x: int=8, y: int=0, clear: bool=True):
         """
-        Riempe il display del colore specificato
+        Mostra un'immagine sul display.
+
+        :param image: immagine come bytearray, dimensione uguale al display (es. 1024 byte per 128x64)
+        :param x: posizione orizzontale in pixel
+        :param y: posizione verticale in pixel
+        :param clear: se True pulisce lo schermo prima di disegnare
         """
-        self.display.fill(color)
-    def show_image (image):    
-        fb = framebuf.FrameBuffer(image, 128, 64, framebuf.MONO_HLSB)
-        display.fill(0)
-        display.blit(fb, 8, 0)
-        display.show()
-        utime.sleep_ms(500)
+        fb = framebuf.FrameBuffer(image, self.width, self.height, framebuf.MONO_HLSB)
+        if clear:
+            self.display.fill(0)
+        self.display.blit(fb, x, y)
+        self.display.show()
+
     def show_text(self, text: str, x: float=0.5, y: float=0.5, font_width: int=8, font_height: int=8, clear: bool=True):
         """
         Mostra `text` sul display:
@@ -259,7 +263,7 @@ class OLED:
             raise ValueError("font_width e font_height devono essere > 0")
 
         if clear:
-            self.fill()
+            self.display.fill()
 
         text_w = len(text) * font_width
         text_h = font_height

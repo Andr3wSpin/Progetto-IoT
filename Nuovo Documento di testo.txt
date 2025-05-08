@@ -1,0 +1,10 @@
+HC-SR04 X 2: 2 x 2       (4)
+HW-511: 1
+Semaforo: 3
+DHT22: 1
+MAX98357A: 3
+Camera: 14
+PN532: 2 I2C oppure 4 SPI
+
+
+28 oppure 30
