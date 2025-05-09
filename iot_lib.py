@@ -263,7 +263,7 @@ class DisplayUI:
             raise ValueError("font_width e font_height devono essere > 0")
 
         if clear:
-            self.display.fill()
+            self.display.fill(0)
 
         text_w = len(text) * font_width
         text_h = font_height
