@@ -229,7 +229,7 @@ class DisplayUI:
         i2c = I2C(i2c_id, scl=Pin(scl_pin), sda=Pin(sda_pin))
         self.display = ssd1306.SSD1306_I2C(width, height, i2c)
 
-    def show_image(self, image: bytearray, x: int=8, y: int=0, clear: bool=True):
+    def show_image(self, image: bytearray, x: int=0, y: int=0, clear: bool=True):
         """
         Mostra un'immagine sul display.
 
