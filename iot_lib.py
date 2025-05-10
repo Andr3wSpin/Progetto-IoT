@@ -113,11 +113,11 @@ class SENSOR:
 
 
 class POTENTIOMETER:
-    #approssimative ranges (from micropython docs):
-    #0dB : 0-1.1V
-    #2.5dB : 0-1.5V
-    #6dB : 0-2.2V
-    #11dB : 0-3.6V
+    '''approssimative ranges (from micropython docs):
+       0dB : 0-1.1V
+       2.5dB : 0-1.5V
+       6dB : 0-2.2V
+       11dB : 0-3.6V'''
     def __init__(self, sig_pin: int, mode=Pin.IN, attn: int=ADC.ATTN_11DB, max_v: float=3.3 ,resolution: int=4095):   #4095 rapresentable values for 12 bit resolution
         if max_v <= 0:
             raise Exception('Min value is greater or equal to max value')
@@ -214,7 +214,6 @@ class STEP_MOTOR_FULL:
             sleep_us(delay_ptr.value)
 
 
-#pin sicuri: SCL_PIN = 22 SDA_PIN = 21
 class DisplayUI:
     def __init__(self, scl_pin: int, sda_pin: int, i2c_id: int=0, width: int=128, height: int=64):
         """
@@ -229,50 +228,43 @@ class DisplayUI:
         i2c = I2C(i2c_id, scl=Pin(scl_pin), sda=Pin(sda_pin))
         self.display = ssd1306.SSD1306_I2C(width, height, i2c)
 
-    def show_image(self, image: bytearray, x: int=0, y: int=0, clear: bool=True):
+    def show_image(self, image: bytearray, x: int=0, y: int=0):
         """
         Mostra un'immagine sul display.
 
         :param image: immagine come bytearray, dimensione uguale al display (es. 1024 byte per 128x64)
         :param x: posizione orizzontale in pixel
         :param y: posizione verticale in pixel
-        :param clear: se True pulisce lo schermo prima di disegnare
         """
         fb = framebuf.FrameBuffer(image, self.width, self.height, framebuf.MONO_HLSB)
-        if clear:
-            self.display.fill(0)
+        
         self.display.blit(fb, x, y)
         self.display.show()
 
-    def show_text(self, text: str, x: float=0.5, y: float=0.5, font_width: int=8, font_height: int=8, clear: bool=True):
+    def show_text(self, text: str, color: int=1, x: int=50, y: int=50):
         """
         Mostra `text` sul display:
          - text: stringa da visualizzare
-         - x: posizione orizzontale normalizzata da 0.0 a 1.0
-         - y: posizione verticale   normalizzata da 0.0 a 1.0
-         - font_width: larghezza di un carattere in pixel (>0)
-         - font_height: altezza di un carattere in pixel (>0)
-         - clear: se True pulisce lo schermo prima
+         - color: colore del testo (0 o 1)
+         - x: posizione orizzontale da 0 a 100
+         - y: posizione verticale da 0 a 100
         """
+        FONT_WIDTH = 8
+        FONT_HEIGHT = 8
         # Controlli parametri
-        if not (0.0 <= x <= 1.0):
-            raise ValueError(f"x deve essere fra 0.0 e 1.0, {x} non valido")
-        if not (0.0 <= y <= 1.0):
-            raise ValueError(f"y deve essere fra 0.0 e 1.0, {y} non valido")
-        if font_width <= 0 or font_height <= 0:
-            raise ValueError("font_width e font_height devono essere > 0")
+        if not (0 <= x <= 100):
+            raise ValueError(f"x deve essere fra 0 e 100, {x} non valido")
+        if not (0 <= y <= 100):
+            raise ValueError(f"y deve essere fra 0 e 100, {y} non valido")
 
-        if clear:
-            self.display.fill(0)
+        text_w = len(text) * FONT_WIDTH
+        text_h = FONT_HEIGHT
 
-        text_w = len(text) * font_width
-        text_h = font_height
-
-        x_px = int((self.width - text_w) * x)
-        y_px = int((self.height - text_h) * y)
+        x_px = (self.width - text_w) * x // 100
+        y_px = (self.height - text_h) * y // 100
 
         x_px = min(max(0, x_px), max(0, self.width - text_w))
         y_px = min(max(0, y_px), max(0, self.height - text_h))
 
-        self.display.text(text, x_px, y_px, 1)
+        self.display.text(text, x_px, y_px, color)
         self.display.show()
