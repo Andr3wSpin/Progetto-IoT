@@ -1,7 +1,7 @@
 import machine, time
 from machine import Pin
 
-#Trig pin to GPIO 5 and the Echo pin to GPIO 18
+
 class HCSR04:
     """
     Driver to use the untrasonic sensor HC-SR04.
@@ -70,7 +70,3 @@ class HCSR04:
         # 0.034320 cm/us that is 1cm each 29.1us
         cms = (pulse_time / 2) / 29.1
         return cms
-sensor = HCSR04(5,18)
-while True:
-    print(sensor.distance_cm())
-    time.sleep_ms(2000)

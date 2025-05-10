@@ -1,0 +1,2 @@
+class STOPLIGHT:
+    pass
