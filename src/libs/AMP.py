@@ -22,7 +22,7 @@ class AMP:
         :filename: nome del file audio da riprodurre
         :volume: volume in percentuale (0–100), dove 100 è il volume originale
         '''
-        DIM_HEADER = 44
+        DIM_HEADER = 84
         self.en = True
         try:
             with open(filename, 'rb') as f:
@@ -53,6 +53,7 @@ class AMP:
                     ibuf=20000
                 )
 
+                f.read(100)
                 while self.en:
                     data = f.read(1024)
                     if not data:
@@ -79,7 +80,7 @@ class AMP:
         :filename: nome del file audio da riprodurre
         :volume: volume in percentuale (0–100), dove 100 è il volume originale
         '''
-        DIM_HEADER = 44
+        DIM_HEADER = 84
         self.en = True
         try:
             with open(filename, 'rb') as f:
@@ -110,10 +111,11 @@ class AMP:
                     ibuf=20000
                 )
 
+                f.read(100)
                 while self.en:
                     data = f.read(1024)
                     if not data:
-                        f.seek(DIM_HEADER)
+                        f.seek(DIM_HEADER + 100)
                         continue
 
                     samples = ustruct.unpack('<' + 'h' * (len(data) // 2), data)
