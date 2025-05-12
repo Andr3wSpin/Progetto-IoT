@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: mynodered
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1881:1880"         # HTTP editor & dashboard
+      - "12345:12345/udp"   # ESPOSIZIONE DELLA PORTA UDP PER L’AUDIO
+    networks:
+      - node_net
+    volumes:
+      - "./data:/data"
+
+networks:
+  node_net:

@@ -1,0 +1,714 @@
+[
+    {
+        "id": "0b4896f60fec93c2",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9b674500de3eac63",
+        "type": "mqtt-broker",
+        "name": "brokerhive",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": "120",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e354f1ebb9edded8",
+        "type": "websocket-listener",
+        "path": "/audio",
+        "wholemsg": "false"
+    },
+    {
+        "id": "4976286c874d8dae",
+        "type": "mqtt-broker",
+        "name": "zio_pera",
+        "broker": "io.adafruit.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "1b2a1387411125a0",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 30,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "dccb1076abf152a1",
+        "type": "ui_tab",
+        "name": "Garage",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b2249798635b3ee3",
+        "type": "ui_tab",
+        "name": "Controllo",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e0ff5d3e06141d43",
+        "type": "ui_group",
+        "name": "Temperatura",
+        "tab": "dccb1076abf152a1",
+        "order": 1,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5785eb6524075136",
+        "type": "ui_group",
+        "name": "Umidità",
+        "tab": "dccb1076abf152a1",
+        "order": 2,
+        "disp": false,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7d662f0fd2e94d1e",
+        "type": "ui_group",
+        "name": "Allarme",
+        "tab": "b2249798635b3ee3",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5c4db7200c532651",
+        "type": "mqtt in",
+        "z": "0b4896f60fec93c2",
+        "name": "DHT22",
+        "topic": "paolo32v/feeds/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 40,
+        "wires": [
+            [
+                "702ed648e0c694ad",
+                "34fadbdfeddd3867",
+                "5e75a5a1ee606d35"
+            ]
+        ]
+    },
+    {
+        "id": "702ed648e0c694ad",
+        "type": "debug",
+        "z": "0b4896f60fec93c2",
+        "name": "dati_sensore",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "34fadbdfeddd3867",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_umi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "d3f8b2bf34426539",
+                "0e736f485442048d"
+            ]
+        ]
+    },
+    {
+        "id": "5e75a5a1ee606d35",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperatura",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "016e3ce3b5647930",
+                "763db21b39ad87da"
+            ]
+        ]
+    },
+    {
+        "id": "838fee8f625fc1b1",
+        "type": "mqtt out",
+        "z": "0b4896f60fec93c2",
+        "name": "setMAX",
+        "topic": "wokwi-weather/setMax",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b674500de3eac63",
+        "x": 920,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "712fbe7b45212052",
+        "type": "join",
+        "z": "0b4896f60fec93c2",
+        "name": "max_val",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 570,
+        "y": 560,
+        "wires": [
+            [
+                "d496b0c8cf36d848"
+            ]
+        ]
+    },
+    {
+        "id": "d496b0c8cf36d848",
+        "type": "json",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_max_val",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 580,
+        "y": 660,
+        "wires": [
+            [
+                "18b5401344896aea"
+            ]
+        ]
+    },
+    {
+        "id": "2ac3d788d8da8507",
+        "type": "debug",
+        "z": "0b4896f60fec93c2",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "18b5401344896aea",
+        "type": "rbe",
+        "z": "0b4896f60fec93c2",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 750,
+        "y": 720,
+        "wires": [
+            [
+                "2ac3d788d8da8507",
+                "838fee8f625fc1b1"
+            ]
+        ]
+    },
+    {
+        "id": "e668549997b8f5b9",
+        "type": "ui_slider",
+        "z": "0b4896f60fec93c2",
+        "name": "Temperatura Limite",
+        "label": "Temperatura Limite",
+        "tooltip": "",
+        "group": "e0ff5d3e06141d43",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "max_temp",
+        "topicType": "str",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "className": "",
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "712fbe7b45212052"
+            ]
+        ]
+    },
+    {
+        "id": "4c42c3a448916190",
+        "type": "ui_slider",
+        "z": "0b4896f60fec93c2",
+        "name": "Umidità Limite",
+        "label": "Umidità Limite",
+        "tooltip": "",
+        "group": "5785eb6524075136",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "max_hum",
+        "topicType": "str",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "className": "",
+        "x": 740,
+        "y": 460,
+        "wires": [
+            [
+                "712fbe7b45212052"
+            ]
+        ]
+    },
+    {
+        "id": "016e3ce3b5647930",
+        "type": "ui_gauge",
+        "z": "0b4896f60fec93c2",
+        "name": "Temperatura",
+        "group": "e0ff5d3e06141d43",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "gradi mammt",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 350,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d3f8b2bf34426539",
+        "type": "ui_gauge",
+        "z": "0b4896f60fec93c2",
+        "name": "Umidità",
+        "group": "5785eb6524075136",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Umidità",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "763db21b39ad87da",
+        "type": "ui_chart",
+        "z": "0b4896f60fec93c2",
+        "name": "Grafico temperatura",
+        "group": "e0ff5d3e06141d43",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Grafico temperatura",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e736f485442048d",
+        "type": "ui_chart",
+        "z": "0b4896f60fec93c2",
+        "name": "Grafico umidità",
+        "group": "5785eb6524075136",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Grafico umidità",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 740,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38b361d8e16ab979",
+        "type": "ui_template",
+        "z": "0b4896f60fec93c2",
+        "group": "7d662f0fd2e94d1e",
+        "name": "Output video",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"text-align:center;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:auto;\">\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d8c2729e6f4a8b6",
+        "type": "ui_template",
+        "z": "0b4896f60fec93c2",
+        "group": "7d662f0fd2e94d1e",
+        "name": "Output audio",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"display: flex; align-items: center;\">\n    <span style=\"margin-right: 10px;\">🔊</span>\n    <input type=\"range\" id=\"volume-control\" min=\"0\" max=\"100\" value=\"100\" />\n</div>\n\n<script>\n(function(scope) {\n    const AudioContext = window.AudioContext || window.webkitAudioContext;\n    const audioCtx = new AudioContext();\n    const gainNode = audioCtx.createGain();\n    gainNode.gain.value = 1;\n    gainNode.connect(audioCtx.destination);\n\n    const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';\n    const wsUrl = proto + location.host + '/audio';\n    const ws = new WebSocket(wsUrl);\n    ws.binaryType = 'arraybuffer';\n\n    ws.onopen = () => console.log(\"[UI] WS connesso a\", wsUrl);\n    ws.onerror = e => console.error(\"[UI] WS error\", e);\n\n    ws.onmessage = async ({ data }) => {\n        try {\n            const audioBuf = await audioCtx.decodeAudioData(data);\n            const src = audioCtx.createBufferSource();\n            src.buffer = audioBuf;\n            src.connect(gainNode);\n            src.start();\n        } catch (err) {\n            console.error(\"[UI] decodeAudioData failed:\", err);\n        }\n    };\n\n    const volumeSlider = document.getElementById(\"volume-control\");\n    volumeSlider.addEventListener(\"input\", () => {\n        gainNode.gain.value = volumeSlider.value / 100;\n    });\n\n    // Sblocca audioContext al primo input\n    volumeSlider.addEventListener('change', () => {\n        if (audioCtx.state === 'suspended') {\n            audioCtx.resume();\n        }\n    });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa57f9aa342847ae",
+        "type": "websocket out",
+        "z": "0b4896f60fec93c2",
+        "name": "websocket out",
+        "server": "e354f1ebb9edded8",
+        "client": "",
+        "x": 400,
+        "y": 720,
+        "wires": [],
+        "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
+    },
+    {
+        "id": "ac948c51e33ace71",
+        "type": "function",
+        "z": "0b4896f60fec93c2",
+        "name": "function 1",
+        "func": "// Function: wrap-raw-to-wav\nconst pcm = msg.payload;         // Buffer raw PCM (16-bit LE, mono, 8kHz)\n\n// prepara header WAV (44 byte)\nconst header = Buffer.alloc(44);\nfunction writeString(buf, off, str) { buf.write(str, off, 'ascii'); }\n\n// RIFF chunk descriptor\nwriteString(header, 0, 'RIFF');\nheader.writeUInt32LE(pcm.length + 36, 4);  // file size - 8\nwriteString(header, 8, 'WAVE');\n\n// fmt subchunk\nwriteString(header, 12, 'fmt ');\nheader.writeUInt32LE(16, 16);      // subchunk1 size\nheader.writeUInt16LE(1, 20);       // PCM = 1\nheader.writeUInt16LE(1, 22);       // numChannels\nheader.writeUInt32LE(8000, 24);    // sampleRate\nheader.writeUInt32LE(8000 * 2, 28);// byteRate = sampleRate*blockAlign\nheader.writeUInt16LE(2, 32);       // blockAlign = numChannels*bytesPerSample\nheader.writeUInt16LE(16, 34);      // bitsPerSample\n\n// data subchunk\nwriteString(header, 36, 'data');\nheader.writeUInt32LE(pcm.length, 40);\n\n// concat header + payload\nmsg.payload     = Buffer.concat([header, pcm]);\nmsg.payloadType = 'bin';\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 700,
+        "wires": [
+            [
+                "fa57f9aa342847ae"
+            ]
+        ]
+    },
+    {
+        "id": "17c7248d385ec9e6",
+        "type": "udp in",
+        "z": "0b4896f60fec93c2",
+        "name": "udpin",
+        "iface": "",
+        "port": "12345",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "buffer",
+        "x": 70,
+        "y": 680,
+        "wires": [
+            [
+                "ac948c51e33ace71"
+            ]
+        ]
+    }
+]
