@@ -627,7 +627,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<div style=\"text-align:center;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:auto;\">\n</div>",
+        "format": "<div style=\"text-align:center; height: 500px; overflow: hidden;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:100%; object-fit: cover;\">\n</div>\n\n\n",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -664,11 +664,11 @@
         "id": "fa57f9aa342847ae",
         "type": "websocket out",
         "z": "0b4896f60fec93c2",
-        "name": "websocket out",
+        "name": "websocket_out_audio",
         "server": "e354f1ebb9edded8",
         "client": "",
-        "x": 400,
-        "y": 720,
+        "x": 480,
+        "y": 760,
         "wires": [],
         "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
     },
@@ -676,7 +676,7 @@
         "id": "ac948c51e33ace71",
         "type": "function",
         "z": "0b4896f60fec93c2",
-        "name": "function 1",
+        "name": "raw_to_wav",
         "func": "// Function: wrap-raw-to-wav\nconst pcm = msg.payload;         // Buffer raw PCM (16-bit LE, mono, 8kHz)\n\n// prepara header WAV (44 byte)\nconst header = Buffer.alloc(44);\nfunction writeString(buf, off, str) { buf.write(str, off, 'ascii'); }\n\n// RIFF chunk descriptor\nwriteString(header, 0, 'RIFF');\nheader.writeUInt32LE(pcm.length + 36, 4);  // file size - 8\nwriteString(header, 8, 'WAVE');\n\n// fmt subchunk\nwriteString(header, 12, 'fmt ');\nheader.writeUInt32LE(16, 16);      // subchunk1 size\nheader.writeUInt16LE(1, 20);       // PCM = 1\nheader.writeUInt16LE(1, 22);       // numChannels\nheader.writeUInt32LE(8000, 24);    // sampleRate\nheader.writeUInt32LE(8000 * 2, 28);// byteRate = sampleRate*blockAlign\nheader.writeUInt16LE(2, 32);       // blockAlign = numChannels*bytesPerSample\nheader.writeUInt16LE(16, 34);      // bitsPerSample\n\n// data subchunk\nwriteString(header, 36, 'data');\nheader.writeUInt32LE(pcm.length, 40);\n\n// concat header + payload\nmsg.payload     = Buffer.concat([header, pcm]);\nmsg.payloadType = 'bin';\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
@@ -684,8 +684,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 700,
+        "x": 270,
+        "y": 760,
         "wires": [
             [
                 "fa57f9aa342847ae"
@@ -696,7 +696,7 @@
         "id": "17c7248d385ec9e6",
         "type": "udp in",
         "z": "0b4896f60fec93c2",
-        "name": "udpin",
+        "name": "udp_in_audio",
         "iface": "",
         "port": "12345",
         "ipv": "udp4",
@@ -704,7 +704,7 @@
         "group": "",
         "datatype": "buffer",
         "x": 70,
-        "y": 680,
+        "y": 760,
         "wires": [
             [
                 "ac948c51e33ace71"
