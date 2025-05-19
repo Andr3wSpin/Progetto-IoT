@@ -1,0 +1,23 @@
+@startuml Stoplight
+hide empty description
+
+skinparam stateBackgroundColor #9fc2ff
+skinparam stateBorderColor #586E75
+
+state Stoplight {
+  
+  [*] --> Off
+  Off --> Red : car_present or shutter_closing
+  Off ---> Yellow : shutter_opening
+  Yellow ----> Green : shutter_opened and !car_present
+  Yellow -------> Red : car_present
+  Green ---> Red: car_present or shutter_closing
+  Red --> Off : !car_present and !shutter_closing
+  Green : green_light()
+  Yellow : yellow_light()
+  Red : red_light()
+
+
+}
+
+@enduml

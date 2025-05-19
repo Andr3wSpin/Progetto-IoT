@@ -1,0 +1,17 @@
+@startuml SecuritySystem
+hide empty description
+
+skinparam stateBackgroundColor #9fc2ff
+skinparam stateBorderColor #586E75
+
+state SecuritySystem {
+  [*] ---> Idle
+
+  Idle ---> Monitoring : garage_closed && car_present
+  Monitoring --> Alarm : !car_present && garage_closed / start_alarm()
+  Alarm -----> Idle : reset_alarm()
+  Alarm : alarm()
+  Monitoring -------> Idle : garage_opening
+}
+
+@enduml

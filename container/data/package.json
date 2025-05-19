@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "node-red-contrib-remote": "~2.0.2",
         "node-red-contrib-ui-media": "~1.2.0",
         "node-red-dashboard": "~3.6.5"
     }

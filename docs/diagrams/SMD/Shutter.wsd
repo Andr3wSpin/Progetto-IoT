@@ -1,0 +1,24 @@
+@startuml Shutter
+hide empty description
+
+skinparam stateBackgroundColor #9fc2ff
+skinparam stateBorderColor #586E75
+
+state Shutter {
+  [*] --> Closed
+
+  Closed ---> Opening              : toggle
+  Opening : start_motor()
+  Opening --> Open                 : shutter_opened
+
+  Open  : stop_motor()
+  Open   ----> Closing             : toggle
+  Closing : start_motor(close)
+  Closing -----> Closed            : shutter_closed / stop_motor()
+
+  Closing ----> StoppedClose       : obstacle_detected
+  StoppedClose                     : stop_motor()\nstart_motor(open)
+  StoppedClose -----> Open         : shutter_opened
+
+}
+@enduml
