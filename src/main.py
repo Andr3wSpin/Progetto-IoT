@@ -6,8 +6,8 @@ import dht
 import libs
 
 # valori massimi di temperatura e umidità
-MAX_TEMP = None
-MAX_HUM = None
+MAX_TEMP = 25
+MAX_HUM = 30
 
 '''
 QUESTA SEZIONE VA TUTTA NEL FILE boot.py
@@ -29,7 +29,13 @@ def nfc_handler(msg):
 
 def dht_handler(msg):
     # aggiorna MAX_TEMP e MAX_HUM in base ai valori ricevuti per messaggio
-    pass
+    data = ujson.loads(msg)
+
+    if 'max_temp' in data:
+        MAX_TEMP = data['max_temp']
+        
+    if 'max_hum' in data:
+        MAX_HUM = data['max_hum']
 
 def sub_callback(topic, msg):
     # richiama l'handler associato al topic del messaggio ricevuto
