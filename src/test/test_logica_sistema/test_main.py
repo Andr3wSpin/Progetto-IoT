@@ -1,5 +1,3 @@
-# main.py
-
 import uasyncio as asyncio
 from machine import Pin
 
@@ -29,12 +27,17 @@ AUTHORIZED_UIDS = {"04AABBCC", "11223344"}
 # -----------------------------------------------------------------------------
 def on_nfc(uid_str):
     global shutter_state
-    if uid_str and uid_str in AUTHORIZED_UIDS:
+    # ignoriamo NFC se non siamo chiusi o non c'è UID
+    if shutter_state != "closed" or not uid_str:
+        return
+
+    if uid_str in AUTHORIZED_UIDS:
+        # accesso permesso
         asyncio.create_task(amp.play("access_allowed.wav"))
         animation.set_state(Animation.ACCESS_ALLOWED)
-        if shutter_state == "closed":
-            shutter_state = "opening"
-    elif uid_str:
+        shutter_state = "opening"
+    else:
+        # UID non riconosciuto
         asyncio.create_task(amp.play("access_denied.wav"))
         animation.set_state(Animation.ACCESS_DENIED)
 
@@ -48,6 +51,7 @@ def on_obstacle(is_near):
 
 def on_dht(temp, hum):
     global fire_alarm
+    print(temp, "\n", hum)
     if temp is not None and temp >= 50.0:
         fire_alarm = True
 
@@ -61,6 +65,17 @@ def on_reset():
     fire_alarm     = False
     animation.set_state(Animation.ANIMATION)
     amp.stop()
+
+def on_shutter():
+    """
+    Callback del pulsante shutter (IRQ):
+    toggle tra 'opening' e 'closing' solo se siamo in 'closed' o 'opened'
+    """
+    global shutter_state
+    if shutter_state == "closed":
+        shutter_state = "opening"
+    elif shutter_state == "opened":
+        shutter_state = "closing"
 
 # -----------------------------------------------------------------------------
 # 3) Istanze hardware e servizi
@@ -92,6 +107,10 @@ nfc = NFCReader(
 # Pulsante reset allarmi su GPIO27, pull-up e IRQ su fronte di discesa
 reset_btn = Pin(27, Pin.IN, Pin.PULL_UP)
 reset_btn.irq(trigger=Pin.IRQ_FALLING, handler=lambda pin: on_reset())
+
+# Nuovo pulsante shutter su GPIO26, pull-up e IRQ
+btn_shutter = Pin(26, Pin.IN, Pin.PULL_UP)
+btn_shutter.irq(trigger=Pin.IRQ_FALLING, handler=lambda pin: on_shutter())
 
 # -----------------------------------------------------------------------------
 # 3-bis) Semaforo (LED)
@@ -134,10 +153,12 @@ async def shutter_sm():
 
         elif shutter_state == "closing":
             await shutter_motor.step(-1)
+            # se compare un ostacolo interrompi e riapri
             if obstacle_detected:
                 shutter_motor.stop_motor()
                 shutter_state = "opening"
                 continue
+            # altrimenti attendi finecorsa
             while not limit_switch.object_detected():
                 await asyncio.sleep_ms(50)
             shutter_motor.stop_motor()
@@ -187,6 +208,15 @@ async def fire_sm():
                 state = "idle"
         await asyncio.sleep_ms(100)
 
+async def auto_toggle_sm():
+    """
+    Ogni 10 secondi, se il garage è aperto, lo prova a richiudere automaticamente.
+    """
+    while True:
+        await asyncio.sleep(10)
+        if shutter_state == "opened":
+            shutter_state = "closing"
+
 # -----------------------------------------------------------------------------
 # 5) Main: crea e avvia tutti i task
 # -----------------------------------------------------------------------------
@@ -202,6 +232,7 @@ async def main():
     asyncio.create_task(shutter_sm())
     asyncio.create_task(security_sm())
     asyncio.create_task(fire_sm())
+    asyncio.create_task(auto_toggle_sm())
 
     # animazione e semaforo
     asyncio.create_task(animation.loop())
@@ -213,3 +244,4 @@ async def main():
 
 # Avvio
 asyncio.run(main())
+

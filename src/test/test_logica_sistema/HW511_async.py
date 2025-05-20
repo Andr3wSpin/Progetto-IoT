@@ -22,7 +22,7 @@ class HW511:
         while True:
             current = self.object_detected()
             if current and not last:
-                # stato passato da False -> True
+                #False -> True
                 callback()
             last = current
             await asyncio.sleep_ms(interval_ms)

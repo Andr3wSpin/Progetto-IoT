@@ -6,6 +6,8 @@ class Animation:
     def __init__(self, oled: DisplayUI, hb: int=11, car_width: int=126):
         # flag di esecuzione
         self.en = True
+        self.burglar_alarm = False
+        self.fire_alarm = False
 
         # display e dimensioni
         self.oled = oled
