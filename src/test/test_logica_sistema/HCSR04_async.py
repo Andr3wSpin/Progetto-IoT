@@ -72,7 +72,7 @@ class HCSR04:
         cms = (pulse_time / 2) / 29.1
         return cms
     
-    async def detect_obj(self, callback, threshold_cm: float = 5.0, interval_s: float = 1.0):
+    async def detect_obj(self, callback, threshold_cm: float = 20.0, interval_s: float = 10.0):
         """
         Ogni interval_s secondi misura la distanza, e se
         distanza < threshold_cm chiama callback(True),
@@ -81,6 +81,7 @@ class HCSR04:
         while True:
             try:
                 distanza = self.distance_cm()
+                print(distanza)
                 callback(distanza < threshold_cm)
             except OSError:
                 callback(False)
