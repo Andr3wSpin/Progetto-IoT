@@ -10,8 +10,8 @@ class STEP_MOTOR_FULL:
         sig_pin4: int,
         step_index: int = 0
     ):
-        self.STEPS = 10        # passi totali per corsa completa
-        self.DELAY = 0.001       # ritardo fra un passo e l'altro in secondi
+        self.STEPS = 2048        # passi totali per corsa completa
+        self.DELAY = 0.01       # ritardo fra un passo e l'altro in secondi
         self.stop = False      # flag per fermare l'esecuzione
 
         self.stepper_pins = [
