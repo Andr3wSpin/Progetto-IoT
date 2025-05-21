@@ -665,5 +665,24 @@
                 "file": "/data/node_modules/node-red-dashboard/nodes/ui_spacer.js"
             }
         }
+    },
+    "node-red-contrib-ui-media": {
+        "name": "node-red-contrib-ui-media",
+        "version": "1.2.0",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "ui_media": {
+                "name": "ui_media",
+                "types": [
+                    "ui_media"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-ui-media",
+                "file": "/data/node_modules/node-red-contrib-ui-media/ui_media.js"
+            }
+        }
     }
 }

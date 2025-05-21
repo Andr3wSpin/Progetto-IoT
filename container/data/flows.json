@@ -225,23 +225,11 @@
         "className": ""
     },
     {
-        "id": "5f262af211e7d9d3",
-        "type": "remote-config",
-        "name": "Node-RED UI",
-        "host": "192.168.1.9",
-        "protocol": "http",
-        "port": "1881",
-        "baseurl": "/ui",
-        "instancehash": "linhx8abywzjnj0vrjqnqg83utgdeg42bdw2m2k2ndu3i3w1jeqzxzi9odan3feq",
-        "server": "nodered04.remote-red.com",
-        "region": "de"
-    },
-    {
         "id": "5c4db7200c532651",
         "type": "mqtt in",
         "z": "0b4896f60fec93c2",
-        "name": "DHT22",
-        "topic": "paolo32v/feeds/temperatura",
+        "name": "DHT/readVAL",
+        "topic": "paolo32v/feeds/DHT/readVal",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "4976286c874d8dae",
@@ -249,32 +237,14 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 230,
-        "y": 40,
+        "x": 470,
+        "y": 60,
         "wires": [
             [
-                "702ed648e0c694ad",
                 "34fadbdfeddd3867",
                 "5e75a5a1ee606d35"
             ]
         ]
-    },
-    {
-        "id": "702ed648e0c694ad",
-        "type": "debug",
-        "z": "0b4896f60fec93c2",
-        "name": "dati_sensore",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 20,
-        "wires": []
     },
     {
         "id": "34fadbdfeddd3867",
@@ -286,7 +256,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.humidity",
+                "to": "payload.hum",
                 "tot": "msg"
             }
         ],
@@ -314,7 +284,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.temperatura",
+                "to": "payload.temp",
                 "tot": "msg"
             }
         ],
@@ -347,7 +317,7 @@
         "expiry": "",
         "broker": "9b674500de3eac63",
         "x": 920,
-        "y": 660,
+        "y": 840,
         "wires": []
     },
     {
@@ -372,7 +342,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 570,
-        "y": 560,
+        "y": 740,
         "wires": [
             [
                 "d496b0c8cf36d848"
@@ -388,7 +358,7 @@
         "action": "str",
         "pretty": false,
         "x": 580,
-        "y": 660,
+        "y": 840,
         "wires": [
             [
                 "18b5401344896aea"
@@ -408,7 +378,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 900,
-        "y": 580,
+        "y": 760,
         "wires": []
     },
     {
@@ -424,7 +394,7 @@
         "property": "payload",
         "topi": "topic",
         "x": 750,
-        "y": 720,
+        "y": 900,
         "wires": [
             [
                 "2ac3d788d8da8507",
@@ -452,7 +422,7 @@
         "step": 1,
         "className": "",
         "x": 370,
-        "y": 460,
+        "y": 640,
         "wires": [
             [
                 "712fbe7b45212052"
@@ -479,7 +449,7 @@
         "step": 1,
         "className": "",
         "x": 740,
-        "y": 460,
+        "y": 640,
         "wires": [
             [
                 "712fbe7b45212052"
@@ -645,8 +615,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 450,
-        "y": 840,
+        "x": 490,
+        "y": 980,
         "wires": [
             []
         ]
@@ -666,8 +636,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 450,
-        "y": 920,
+        "x": 490,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -679,8 +649,8 @@
         "name": "websocket_out_audio",
         "server": "e354f1ebb9edded8",
         "client": "",
-        "x": 480,
-        "y": 760,
+        "x": 520,
+        "y": 900,
         "wires": [],
         "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
     },
@@ -696,8 +666,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
-        "y": 760,
+        "x": 310,
+        "y": 900,
         "wires": [
             [
                 "fa57f9aa342847ae"
@@ -715,8 +685,8 @@
         "multicast": "false",
         "group": "",
         "datatype": "buffer",
-        "x": 70,
-        "y": 760,
+        "x": 110,
+        "y": 900,
         "wires": [
             [
                 "ac948c51e33ace71"
@@ -724,17 +694,79 @@
         ]
     },
     {
-        "id": "9c621eecb2525b5a",
-        "type": "remote-access",
+        "id": "ea94ae7d1207478f",
+        "type": "mqtt in",
         "z": "0b4896f60fec93c2",
-        "confignode": "5f262af211e7d9d3",
-        "name": "",
-        "verbose": 0,
-        "x": 780,
-        "y": 1000,
+        "name": "DHT/initMAX",
+        "topic": "paolo32v/feeds/DHT/initMAX",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 470,
+        "y": 440,
         "wires": [
-            [],
-            []
+            [
+                "60cf66ffdd132057",
+                "1215487def2450bc"
+            ]
+        ]
+    },
+    {
+        "id": "60cf66ffdd132057",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.max_temp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "e668549997b8f5b9"
+            ]
+        ]
+    },
+    {
+        "id": "1215487def2450bc",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_umi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.hum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 540,
+        "wires": [
+            [
+                "4c42c3a448916190"
+            ]
         ]
     }
 ]
