@@ -2,41 +2,34 @@
     {
         "id": "0b4896f60fec93c2",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "DHT22",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "9b674500de3eac63",
-        "type": "mqtt-broker",
-        "name": "brokerhive",
-        "broker": "broker.hivemq.com",
-        "port": 1883,
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": "120",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
+        "id": "a2050da58b9ceffe",
+        "type": "tab",
+        "label": "Audio + Video",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "47f835d6bae6e30e",
+        "type": "tab",
+        "label": "NFC",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "819d5f2cd30dfca7",
+        "type": "tab",
+        "label": "Motore",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
         "id": "e354f1ebb9edded8",
@@ -185,7 +178,7 @@
     {
         "id": "b2249798635b3ee3",
         "type": "ui_tab",
-        "name": "Controllo",
+        "name": "Videosorveglianza",
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
@@ -216,11 +209,31 @@
     {
         "id": "7d662f0fd2e94d1e",
         "type": "ui_group",
-        "name": "Allarme",
+        "name": "Telecamera",
         "tab": "b2249798635b3ee3",
         "order": 1,
         "disp": false,
         "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "eacb43e671c320d1",
+        "type": "ui_tab",
+        "name": "Controllo",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cbac3bee24abd66d",
+        "type": "ui_group",
+        "name": "Serranda",
+        "tab": "eacb43e671c320d1",
+        "order": 1,
+        "disp": true,
+        "width": 6,
         "collapse": false,
         "className": ""
     },
@@ -237,8 +250,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 470,
-        "y": 60,
+        "x": 490,
+        "y": 40,
         "wires": [
             [
                 "34fadbdfeddd3867",
@@ -265,8 +278,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
-        "y": 160,
+        "x": 670,
+        "y": 140,
         "wires": [
             [
                 "d3f8b2bf34426539",
@@ -293,8 +306,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
-        "y": 160,
+        "x": 350,
+        "y": 140,
         "wires": [
             [
                 "016e3ce3b5647930",
@@ -307,7 +320,7 @@
         "type": "mqtt out",
         "z": "0b4896f60fec93c2",
         "name": "setMAX",
-        "topic": "wokwi-weather/setMax",
+        "topic": "paolo32v/feeds/DHT/setMAX",
         "qos": "2",
         "retain": "",
         "respTopic": "",
@@ -315,8 +328,8 @@
         "userProps": "",
         "correl": "",
         "expiry": "",
-        "broker": "9b674500de3eac63",
-        "x": 920,
+        "broker": "4976286c874d8dae",
+        "x": 840,
         "y": 840,
         "wires": []
     },
@@ -341,7 +354,7 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 570,
+        "x": 490,
         "y": 740,
         "wires": [
             [
@@ -357,7 +370,7 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 580,
+        "x": 500,
         "y": 840,
         "wires": [
             [
@@ -377,7 +390,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 900,
+        "x": 820,
         "y": 760,
         "wires": []
     },
@@ -393,7 +406,7 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 750,
+        "x": 670,
         "y": 900,
         "wires": [
             [
@@ -421,7 +434,7 @@
         "max": "100",
         "step": 1,
         "className": "",
-        "x": 370,
+        "x": 290,
         "y": 640,
         "wires": [
             [
@@ -448,7 +461,7 @@
         "max": "100",
         "step": 1,
         "className": "",
-        "x": 740,
+        "x": 660,
         "y": 640,
         "wires": [
             [
@@ -480,8 +493,8 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 350,
-        "y": 260,
+        "x": 370,
+        "y": 240,
         "wires": []
     },
     {
@@ -508,8 +521,8 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 740,
-        "y": 260,
+        "x": 760,
+        "y": 240,
         "wires": []
     },
     {
@@ -550,8 +563,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 380,
-        "y": 360,
+        "x": 400,
+        "y": 340,
         "wires": [
             []
         ]
@@ -594,103 +607,10 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 740,
-        "y": 360,
+        "x": 760,
+        "y": 340,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "38b361d8e16ab979",
-        "type": "ui_template",
-        "z": "0b4896f60fec93c2",
-        "group": "7d662f0fd2e94d1e",
-        "name": "Output video",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "<div style=\"text-align:center; height: 500px; overflow: hidden;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:100%; object-fit: cover;\">\n</div>\n\n\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 490,
-        "y": 980,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1d8c2729e6f4a8b6",
-        "type": "ui_template",
-        "z": "0b4896f60fec93c2",
-        "group": "7d662f0fd2e94d1e",
-        "name": "Output audio",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "<div style=\"display: flex; align-items: center;\">\n    <span style=\"margin-right: 10px;\">🔊</span>\n    <input type=\"range\" id=\"volume-control\" min=\"0\" max=\"100\" value=\"100\" />\n</div>\n\n<script>\n(function(scope) {\n    const AudioContext = window.AudioContext || window.webkitAudioContext;\n    const audioCtx = new AudioContext();\n    const gainNode = audioCtx.createGain();\n    gainNode.gain.value = 1;\n    gainNode.connect(audioCtx.destination);\n\n    const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';\n    const wsUrl = proto + location.host + '/audio';\n    const ws = new WebSocket(wsUrl);\n    ws.binaryType = 'arraybuffer';\n\n    ws.onopen = () => console.log(\"[UI] WS connesso a\", wsUrl);\n    ws.onerror = e => console.error(\"[UI] WS error\", e);\n\n    ws.onmessage = async ({ data }) => {\n        try {\n            const audioBuf = await audioCtx.decodeAudioData(data);\n            const src = audioCtx.createBufferSource();\n            src.buffer = audioBuf;\n            src.connect(gainNode);\n            src.start();\n        } catch (err) {\n            console.error(\"[UI] decodeAudioData failed:\", err);\n        }\n    };\n\n    const volumeSlider = document.getElementById(\"volume-control\");\n    volumeSlider.addEventListener(\"input\", () => {\n        gainNode.gain.value = volumeSlider.value / 100;\n    });\n\n    // Sblocca audioContext al primo input\n    volumeSlider.addEventListener('change', () => {\n        if (audioCtx.state === 'suspended') {\n            audioCtx.resume();\n        }\n    });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 490,
-        "y": 1060,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "fa57f9aa342847ae",
-        "type": "websocket out",
-        "z": "0b4896f60fec93c2",
-        "name": "websocket_out_audio",
-        "server": "e354f1ebb9edded8",
-        "client": "",
-        "x": 520,
-        "y": 900,
-        "wires": [],
-        "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
-    },
-    {
-        "id": "ac948c51e33ace71",
-        "type": "function",
-        "z": "0b4896f60fec93c2",
-        "name": "raw_to_wav",
-        "func": "// Function: wrap-raw-to-wav\nconst pcm = msg.payload;         // Buffer raw PCM (16-bit LE, mono, 8kHz)\n\n// prepara header WAV (44 byte)\nconst header = Buffer.alloc(44);\nfunction writeString(buf, off, str) { buf.write(str, off, 'ascii'); }\n\n// RIFF chunk descriptor\nwriteString(header, 0, 'RIFF');\nheader.writeUInt32LE(pcm.length + 36, 4);  // file size - 8\nwriteString(header, 8, 'WAVE');\n\n// fmt subchunk\nwriteString(header, 12, 'fmt ');\nheader.writeUInt32LE(16, 16);      // subchunk1 size\nheader.writeUInt16LE(1, 20);       // PCM = 1\nheader.writeUInt16LE(1, 22);       // numChannels\nheader.writeUInt32LE(8000, 24);    // sampleRate\nheader.writeUInt32LE(8000 * 2, 28);// byteRate = sampleRate*blockAlign\nheader.writeUInt16LE(2, 32);       // blockAlign = numChannels*bytesPerSample\nheader.writeUInt16LE(16, 34);      // bitsPerSample\n\n// data subchunk\nwriteString(header, 36, 'data');\nheader.writeUInt32LE(pcm.length, 40);\n\n// concat header + payload\nmsg.payload     = Buffer.concat([header, pcm]);\nmsg.payloadType = 'bin';\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 310,
-        "y": 900,
-        "wires": [
-            [
-                "fa57f9aa342847ae"
-            ]
-        ]
-    },
-    {
-        "id": "17c7248d385ec9e6",
-        "type": "udp in",
-        "z": "0b4896f60fec93c2",
-        "name": "udp_in_audio",
-        "iface": "",
-        "port": "12345",
-        "ipv": "udp4",
-        "multicast": "false",
-        "group": "",
-        "datatype": "buffer",
-        "x": 110,
-        "y": 900,
-        "wires": [
-            [
-                "ac948c51e33ace71"
-            ]
         ]
     },
     {
@@ -706,7 +626,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 470,
+        "x": 390,
         "y": 440,
         "wires": [
             [
@@ -734,7 +654,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 350,
+        "x": 270,
         "y": 540,
         "wires": [
             [
@@ -761,12 +681,290 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 590,
         "y": 540,
         "wires": [
             [
                 "4c42c3a448916190"
             ]
         ]
+    },
+    {
+        "id": "38b361d8e16ab979",
+        "type": "ui_template",
+        "z": "a2050da58b9ceffe",
+        "group": "7d662f0fd2e94d1e",
+        "name": "Output video",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"text-align:center; height: 500px; overflow: hidden;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:100%; object-fit: cover;\">\n</div>\n\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 610,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d8c2729e6f4a8b6",
+        "type": "ui_template",
+        "z": "a2050da58b9ceffe",
+        "group": "7d662f0fd2e94d1e",
+        "name": "Output audio",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"display: flex; align-items: center;\">\n    <span style=\"margin-right: 10px;\">🔊</span>\n    <input type=\"range\" id=\"volume-control\" min=\"0\" max=\"100\" value=\"100\" />\n</div>\n\n<script>\n(function(scope) {\n    const AudioContext = window.AudioContext || window.webkitAudioContext;\n    const audioCtx = new AudioContext();\n    const gainNode = audioCtx.createGain();\n    gainNode.gain.value = 1;\n    gainNode.connect(audioCtx.destination);\n\n    const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';\n    const wsUrl = proto + location.host + '/audio';\n    const ws = new WebSocket(wsUrl);\n    ws.binaryType = 'arraybuffer';\n\n    ws.onopen = () => console.log(\"[UI] WS connesso a\", wsUrl);\n    ws.onerror = e => console.error(\"[UI] WS error\", e);\n\n    ws.onmessage = async ({ data }) => {\n        try {\n            const audioBuf = await audioCtx.decodeAudioData(data);\n            const src = audioCtx.createBufferSource();\n            src.buffer = audioBuf;\n            src.connect(gainNode);\n            src.start();\n        } catch (err) {\n            console.error(\"[UI] decodeAudioData failed:\", err);\n        }\n    };\n\n    const volumeSlider = document.getElementById(\"volume-control\");\n    volumeSlider.addEventListener(\"input\", () => {\n        gainNode.gain.value = volumeSlider.value / 100;\n    });\n\n    // Sblocca audioContext al primo input\n    volumeSlider.addEventListener('change', () => {\n        if (audioCtx.state === 'suspended') {\n            audioCtx.resume();\n        }\n    });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 610,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa57f9aa342847ae",
+        "type": "websocket out",
+        "z": "a2050da58b9ceffe",
+        "name": "websocket_out_audio",
+        "server": "e354f1ebb9edded8",
+        "client": "",
+        "x": 640,
+        "y": 80,
+        "wires": [],
+        "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
+    },
+    {
+        "id": "ac948c51e33ace71",
+        "type": "function",
+        "z": "a2050da58b9ceffe",
+        "name": "raw_to_wav",
+        "func": "// Function: wrap-raw-to-wav\nconst pcm = msg.payload;         // Buffer raw PCM (16-bit LE, mono, 8kHz)\n\n// prepara header WAV (44 byte)\nconst header = Buffer.alloc(44);\nfunction writeString(buf, off, str) { buf.write(str, off, 'ascii'); }\n\n// RIFF chunk descriptor\nwriteString(header, 0, 'RIFF');\nheader.writeUInt32LE(pcm.length + 36, 4);  // file size - 8\nwriteString(header, 8, 'WAVE');\n\n// fmt subchunk\nwriteString(header, 12, 'fmt ');\nheader.writeUInt32LE(16, 16);      // subchunk1 size\nheader.writeUInt16LE(1, 20);       // PCM = 1\nheader.writeUInt16LE(1, 22);       // numChannels\nheader.writeUInt32LE(8000, 24);    // sampleRate\nheader.writeUInt32LE(8000 * 2, 28);// byteRate = sampleRate*blockAlign\nheader.writeUInt16LE(2, 32);       // blockAlign = numChannels*bytesPerSample\nheader.writeUInt16LE(16, 34);      // bitsPerSample\n\n// data subchunk\nwriteString(header, 36, 'data');\nheader.writeUInt32LE(pcm.length, 40);\n\n// concat header + payload\nmsg.payload     = Buffer.concat([header, pcm]);\nmsg.payloadType = 'bin';\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "fa57f9aa342847ae"
+            ]
+        ]
+    },
+    {
+        "id": "17c7248d385ec9e6",
+        "type": "udp in",
+        "z": "a2050da58b9ceffe",
+        "name": "udp_in_audio",
+        "iface": "",
+        "port": "12345",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "buffer",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "ac948c51e33ace71"
+            ]
+        ]
+    },
+    {
+        "id": "d05d5ebcee205b24",
+        "type": "mqtt in",
+        "z": "47f835d6bae6e30e",
+        "name": "ReadNFC",
+        "topic": "paolo32v/feeds/DHT/readNFC",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 60,
+        "y": 120,
+        "wires": [
+            [
+                "446ad54b820d0286"
+            ]
+        ]
+    },
+    {
+        "id": "d2a9b9059476382b",
+        "type": "http request",
+        "z": "47f835d6bae6e30e",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "e10e9eb8955a7aab",
+                "9b457a6181c54298"
+            ]
+        ]
+    },
+    {
+        "id": "e10e9eb8955a7aab",
+        "type": "function",
+        "z": "47f835d6bae6e30e",
+        "name": "creazione risposta",
+        "func": "const chiaveCercata = msg.chiaveCercata;  // recuperiamo la chiave cercata (da inject)\n\n// Verifica se la risposta contiene dei risultati\nif (msg.payload && msg.payload.count > 0 && Array.isArray(msg.payload.results)) {\n    // Cerchiamo la chiave in 'results'\n    const trovata = msg.payload.results.some(row => row.chiaveNFC === chiaveCercata);\n\n    if (trovata) msg.payload = 1;\n    else msg.payload = 0;\n} else msg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 120,
+        "wires": [
+            [
+                "167d2757444d0ef2",
+                "fd034633e0f0fdfb"
+            ]
+        ]
+    },
+    {
+        "id": "167d2757444d0ef2",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "446ad54b820d0286",
+        "type": "function",
+        "z": "47f835d6bae6e30e",
+        "name": "preparazione richiesta",
+        "func": "const chiave = encodeURIComponent(msg.payload);\nmsg.url = `https://api.baserow.io/api/database/rows/table/532602/?user_field_names=true&filter__chiave__equal=${chiave}`;\nmsg.headers = {\n    \"Authorization\": \"Token hoTnIVgq345gSqgQLbX654eVweYUKu7k\"\n};\n// Salva il valore cercato per usarlo dopo\nmsg.chiaveCercata = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 120,
+        "wires": [
+            [
+                "d2a9b9059476382b"
+            ]
+        ]
+    },
+    {
+        "id": "9b457a6181c54298",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fd034633e0f0fdfb",
+        "type": "mqtt out",
+        "z": "47f835d6bae6e30e",
+        "name": "CheckNFC",
+        "topic": "paolo32v/feeds/DHT/checkNFC",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4976286c874d8dae",
+        "x": 930,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "687cd543e8783ab5",
+        "type": "ui_button",
+        "z": "819d5f2cd30dfca7",
+        "name": "Serranda",
+        "group": "cbac3bee24abd66d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "button",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "motore",
+        "payloadType": "str",
+        "topic": "topic.paolo32v/feeds/DHT/readVal",
+        "topicType": "msg",
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "2cd2e43387546614"
+            ]
+        ]
+    },
+    {
+        "id": "2cd2e43387546614",
+        "type": "mqtt out",
+        "z": "819d5f2cd30dfca7",
+        "name": "AzionaMotore",
+        "topic": "paolo32v/feeds/DHT/motor",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4976286c874d8dae",
+        "x": 620,
+        "y": 160,
+        "wires": []
     }
 ]
