@@ -15,6 +15,34 @@ from DisplayUI       import DisplayUI
 from STEP_MOTOR_FULL_async import STEP_MOTOR_FULL
 from STOPLIGHT       import Stoplight
 
+
+SCL_PIN = 37
+SDA_PIN = 38
+RED_PIN=40,
+YELLOW_PIN=41
+GREEN_PIN=42
+BTN_SHUTTER_PIN = 1
+RESET_BTN_PIN = 10
+AMP_BCLK_PIN=5
+AMP_LRCLK_PIN=6
+AMP_DIN_PIN=7
+STEP_MOTOR_FULL_1 = 21
+STEP_MOTOR_FULL_2 = 35
+STEP_MOTOR_FULL_3 = 13
+STEP_MOTOR_FULL_4 = 14
+NFC_SCK_PIN = 18
+NFC_MOSI_PIN = 16
+NFC_MISO_PIN = 17
+NFC_CS_PIN = 15
+NFC_RESET_PIN = 7
+DHT22_PIN = 2
+HCSR04_TRIGGER_1_PIN = 46
+HCSR04_TRIGGER_2_PIN = 11
+HCSR04_ECHO_1_PIN = 9
+HCSR04_ECHO_2_PIN = 12
+HW511_PIN = 36
+
+
 # -----------------------------------------------------------------------------
 # 1) Stato globale condiviso
 # -----------------------------------------------------------------------------
@@ -100,20 +128,21 @@ def on_limit_change(state: bool):
 # -----------------------------------------------------------------------------
 # 3) Istanze hardware e servizi
 # -----------------------------------------------------------------------------
-oled = DisplayUI(scl_pin=37, sda_pin=38)
+oled = DisplayUI(scl_pin=SCL_PIN, sda_pin=SDA_PIN)
 animation      = Animation(oled)
-amp            = AMP(bclk_pin=5, lrclk_pin=6, din_pin=7)
-shutter_motor  = STEP_MOTOR_FULL(21, 35, 13, 14)
-car_sensor     = HCSR04(trigger_pin=46, echo_pin=9)
-obstacle_sensor= HCSR04(trigger_pin=11, echo_pin=12)
-limit_switch   = HW511(sig_pin=36)
+amp            = AMP(bclk_pin=AMP_BCLK_PIN, lrclk_pin=AMP_LRCLK_PIN, din_pin=AMP_DIN_PIN)
+shutter_motor  = STEP_MOTOR_FULL(STEP_MOTOR_FULL_1, STEP_MOTOR_FULL_2, STEP_MOTOR_FULL_3, STEP_MOTOR_FULL_4)
+car_sensor     = HCSR04(trigger_pin=HCSR04_TRIGGER_1_PIN, echo_pin=HCSR04_ECHO_1_PIN)
+obstacle_sensor= HCSR04(trigger_pin=HCSR04_TRIGGER_2_PIN, echo_pin=HCSR04_ECHO_2_PIN)
+limit_switch   = HW511(sig_pin=HW511_PIN)
 nfc            = NFCReader(
-                   sck_pin=18, mosi_pin=16, miso_pin=17,
-                   cs_pin=15, reset_pin=7, debug=False)
-reset_btn      = Pin(10, Pin.IN, Pin.PULL_DOWN)
+                   sck_pin=NFC_SCK_PIN, mosi_pin=NFC_MOSI_PIN, miso_pin=NFC_MISO_PIN,
+                   cs_pin=NFC_CS_PIN, reset_pin=NFC_RESET_PIN, debug=False)
+reset_btn      = Pin(RESET_BTN_PIN, Pin.IN, Pin.PULL_DOWN)
 reset_btn.irq(trigger=Pin.IRQ_FALLING, handler=lambda p: on_reset())
-btn_shutter    = Pin(1,  Pin.IN,  Pin.PULL_DOWN)
+btn_shutter    = Pin(BTN_SHUTTER_PIN,  Pin.IN,  Pin.PULL_DOWN)
 btn_shutter.irq(trigger=Pin.IRQ_FALLING, handler=lambda p: on_shutter())
+
 
 
 def cb_car_present():     return car_in_garage
@@ -140,9 +169,9 @@ def cb_stoplight_logic():
         return "off"
 
 stoplight = Stoplight(
-    red_pin=40,
-    yellow_pin=41,
-    green_pin=42,
+    red_pin=RED_PIN,
+    yellow_pin=YELLOW_PIN,
+    green_pin=GREEN_PIN,
     logic_cb=cb_stoplight_logic,
     poll_ms=200
 )
@@ -259,7 +288,7 @@ async def main():
     asyncio.create_task(car_sensor.detect_obj(on_car_near, threshold_cm=15, interval_s=2.0))
     asyncio.create_task(obstacle_sensor.detect_obj(on_obstacle, threshold_cm=15, interval_s=2.0))
     asyncio.create_task(limit_switch.monitor(on_limit_change, interval_ms=200))
-    asyncio.create_task(read_dht22(pin_num=2,               interval_s=10, callback=on_dht))
+    asyncio.create_task(read_dht22(pin_num=DHT22_PIN,               interval_s=10, callback=on_dht))
     asyncio.create_task(shutter_sm())
     asyncio.create_task(security_sm())
     asyncio.create_task(fire_sm())
