@@ -262,7 +262,7 @@
         "z": "0b4896f60fec93c2",
         "name": "ReadVal",
         "topic": "paolo32v/feeds/DHT/readVal",
-        "qos": "2",
+        "qos": "1",
         "datatype": "auto-detect",
         "broker": "4976286c874d8dae",
         "nl": false,
@@ -339,8 +339,8 @@
         "type": "mqtt out",
         "z": "0b4896f60fec93c2",
         "name": "setMAX",
-        "topic": "paolo32v/feeds/DHT/setMAX",
-        "qos": "2",
+        "topic": "paolo32v/feeds/setMAX",
+        "qos": "1",
         "retain": "",
         "respTopic": "",
         "contentType": "",
@@ -393,7 +393,8 @@
         "y": 840,
         "wires": [
             [
-                "18b5401344896aea"
+                "2ac3d788d8da8507",
+                "838fee8f625fc1b1"
             ]
         ]
     },
@@ -402,7 +403,7 @@
         "type": "debug",
         "z": "0b4896f60fec93c2",
         "name": "debug 1",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -428,10 +429,7 @@
         "x": 670,
         "y": 900,
         "wires": [
-            [
-                "2ac3d788d8da8507",
-                "838fee8f625fc1b1"
-            ]
+            []
         ]
     },
     {
@@ -637,8 +635,8 @@
         "type": "mqtt in",
         "z": "0b4896f60fec93c2",
         "name": "InitMAX",
-        "topic": "paolo32v/feeds/DHT/initMAX",
-        "qos": "2",
+        "topic": "paolo32v/feeds/initMAX",
+        "qos": "1",
         "datatype": "auto-detect",
         "broker": "4976286c874d8dae",
         "nl": false,
@@ -649,8 +647,36 @@
         "y": 440,
         "wires": [
             [
+                "1215487def2450bc",
                 "60cf66ffdd132057",
-                "1215487def2450bc"
+                "4d85fc782f11087a"
+            ]
+        ]
+    },
+    {
+        "id": "1215487def2450bc",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_umi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.max_hum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 540,
+        "wires": [
+            [
+                "4c42c3a448916190"
             ]
         ]
     },
@@ -682,31 +708,20 @@
         ]
     },
     {
-        "id": "1215487def2450bc",
-        "type": "change",
+        "id": "4d85fc782f11087a",
+        "type": "debug",
         "z": "0b4896f60fec93c2",
-        "name": "parser_umi",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.hum",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 590,
-        "y": 540,
-        "wires": [
-            [
-                "4c42c3a448916190"
-            ]
-        ]
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 420,
+        "wires": []
     },
     {
         "id": "38b361d8e16ab979",
