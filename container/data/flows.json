@@ -26,15 +26,15 @@
     {
         "id": "819d5f2cd30dfca7",
         "type": "tab",
-        "label": "Motore",
+        "label": "Serranda + Allarme",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "1de4ae5f20813fbc",
+        "id": "e8602252ec8ae6cc",
         "type": "tab",
-        "label": "Allarme",
+        "label": "Stato garage",
         "disabled": false,
         "info": "",
         "env": []
@@ -167,7 +167,7 @@
                 "sy": 48,
                 "gx": 30,
                 "gy": 6,
-                "cx": 6,
+                "cx": 30,
                 "cy": 6,
                 "px": 0,
                 "py": 0
@@ -235,9 +235,20 @@
         "hidden": false
     },
     {
-        "id": "cbac3bee24abd66d",
+        "id": "91e4adc1a34bf764",
         "type": "ui_group",
-        "name": "Serranda",
+        "name": "Report ",
+        "tab": "eacb43e671c320d1",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b12857289083e19e",
+        "type": "ui_group",
+        "name": "Info garage",
         "tab": "eacb43e671c320d1",
         "order": 1,
         "disp": true,
@@ -246,15 +257,24 @@
         "className": ""
     },
     {
-        "id": "91e4adc1a34bf764",
-        "type": "ui_group",
-        "name": "Allarme",
-        "tab": "eacb43e671c320d1",
-        "order": 2,
-        "disp": true,
+        "id": "f63de26c21b4a789",
+        "type": "ui_spacer",
+        "z": "e8602252ec8ae6cc",
+        "name": "spacer",
+        "group": "b12857289083e19e",
+        "order": 4,
         "width": 6,
-        "collapse": false,
-        "className": ""
+        "height": 1
+    },
+    {
+        "id": "8bedc26c401fcae9",
+        "type": "ui_spacer",
+        "z": "e8602252ec8ae6cc",
+        "name": "spacer",
+        "group": "b12857289083e19e",
+        "order": 7,
+        "width": 6,
+        "height": 1
     },
     {
         "id": "5c4db7200c532651",
@@ -830,7 +850,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 60,
-        "y": 120,
+        "y": 60,
         "wires": [
             [
                 "446ad54b820d0286"
@@ -854,7 +874,7 @@
         "senderr": false,
         "headers": [],
         "x": 470,
-        "y": 120,
+        "y": 60,
         "wires": [
             [
                 "e10e9eb8955a7aab",
@@ -875,7 +895,7 @@
         "finalize": "",
         "libs": [],
         "x": 710,
-        "y": 120,
+        "y": 60,
         "wires": [
             [
                 "167d2757444d0ef2",
@@ -897,7 +917,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 740,
-        "y": 240,
+        "y": 140,
         "wires": []
     },
     {
@@ -913,7 +933,7 @@
         "finalize": "",
         "libs": [],
         "x": 260,
-        "y": 120,
+        "y": 60,
         "wires": [
             [
                 "d2a9b9059476382b"
@@ -933,8 +953,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 540,
-        "y": 360,
+        "x": 520,
+        "y": 140,
         "wires": []
     },
     {
@@ -952,31 +972,31 @@
         "expiry": "",
         "broker": "4976286c874d8dae",
         "x": 930,
-        "y": 120,
+        "y": 60,
         "wires": []
     },
     {
         "id": "687cd543e8783ab5",
         "type": "ui_button",
         "z": "819d5f2cd30dfca7",
-        "name": "Serranda",
-        "group": "cbac3bee24abd66d",
-        "order": 0,
-        "width": 0,
-        "height": 0,
+        "name": "Apri serranda",
+        "group": "b12857289083e19e",
+        "order": 5,
+        "width": 3,
+        "height": 1,
         "passthru": false,
-        "label": "Controllo Serranda",
+        "label": "Apri serranda",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
         "icon": "",
-        "payload": "motore",
+        "payload": "apri",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 380,
-        "y": 160,
+        "x": 360,
+        "y": 80,
         "wires": [
             [
                 "2cd2e43387546614"
@@ -987,8 +1007,8 @@
         "id": "2cd2e43387546614",
         "type": "mqtt out",
         "z": "819d5f2cd30dfca7",
-        "name": "AzionaMotore",
-        "topic": "paolo32v/feeds/motor",
+        "name": "AzionaSerranda",
+        "topic": "paolo32v/feeds/shutter",
         "qos": "1",
         "retain": "",
         "respTopic": "",
@@ -997,17 +1017,45 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 620,
-        "y": 160,
+        "x": 600,
+        "y": 120,
         "wires": []
+    },
+    {
+        "id": "f11ee0d62a124d4f",
+        "type": "ui_button",
+        "z": "819d5f2cd30dfca7",
+        "name": "Chiudi serranda",
+        "group": "b12857289083e19e",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Chiudi serranda",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "chiudi",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "2cd2e43387546614"
+            ]
+        ]
     },
     {
         "id": "9a804b0cf4f7ca86",
         "type": "ui_button",
-        "z": "1de4ae5f20813fbc",
+        "z": "819d5f2cd30dfca7",
         "name": "Allarme",
-        "group": "91e4adc1a34bf764",
-        "order": 0,
+        "group": "b12857289083e19e",
+        "order": 8,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -1021,8 +1069,8 @@
         "payloadType": "str",
         "topic": "topic.paolo32v/feeds/alarm",
         "topicType": "msg",
-        "x": 320,
-        "y": 100,
+        "x": 340,
+        "y": 300,
         "wires": [
             [
                 "c81d6ec9887c4776"
@@ -1032,7 +1080,7 @@
     {
         "id": "c81d6ec9887c4776",
         "type": "mqtt out",
-        "z": "1de4ae5f20813fbc",
+        "z": "819d5f2cd30dfca7",
         "name": "DisattivaAllarme",
         "topic": "paolo32v/feeds/alarm",
         "qos": "1",
@@ -1043,8 +1091,282 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 560,
-        "y": 100,
+        "x": 600,
+        "y": 300,
         "wires": []
+    },
+    {
+        "id": "8564eb52e1d1d584",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Stato garage",
+        "label": "Stato garage:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0ef65e7eefa4f4a7",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Stato serranda",
+        "label": "Stato serranda:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d2cb3e4f51f7125a",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Stato allarme",
+        "label": "Stato allarme:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f9dfdb04f10cf33e",
+        "type": "mqtt in",
+        "z": "e8602252ec8ae6cc",
+        "name": "Info Garage",
+        "topic": "paolo32v/feeds/infoGarage",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "03295a4333285638",
+                "9cefa92280264cda",
+                "9438f4b5b2059459"
+            ]
+        ]
+    },
+    {
+        "id": "03295a4333285638",
+        "type": "change",
+        "z": "e8602252ec8ae6cc",
+        "name": "stato garage",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.stato_garage",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 60,
+        "wires": [
+            [
+                "8564eb52e1d1d584"
+            ]
+        ]
+    },
+    {
+        "id": "9cefa92280264cda",
+        "type": "change",
+        "z": "e8602252ec8ae6cc",
+        "name": "stato serranda",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.stato_serranda",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "0ef65e7eefa4f4a7"
+            ]
+        ]
+    },
+    {
+        "id": "9438f4b5b2059459",
+        "type": "change",
+        "z": "e8602252ec8ae6cc",
+        "name": "stato allarme",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.stato_allarme",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "d2cb3e4f51f7125a"
+            ]
+        ]
+    },
+    {
+        "id": "632afdfa82b94a86",
+        "type": "inject",
+        "z": "e8602252ec8ae6cc",
+        "name": "Prova testo",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"stato_garage\":\"occupato\",\"stato_serranda\":\"chiusa\",\"stato_allarme\":\"disattivato\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "03295a4333285638",
+                "9cefa92280264cda",
+                "9438f4b5b2059459"
+            ]
+        ]
+    },
+    {
+        "id": "f88e27db10c25ad6",
+        "type": "ui_table",
+        "z": "e8602252ec8ae6cc",
+        "group": "91e4adc1a34bf764",
+        "name": "Report table",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "Ingresso",
+                "title": "Ingresso",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "Uscita",
+                "title": "Uscita",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "UID",
+                "title": "UID",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 470,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "04ab1db7314b3712",
+        "type": "inject",
+        "z": "e8602252ec8ae6cc",
+        "name": "Prova report ",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"Ingresso\":\"25/05/2025 17:30\",\"Uscita\":\"25/05/2025 19:30\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 08:15\",\"Uscita\":\"26/05/2025 10:00\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 11:45\",\"Uscita\":\"26/05/2025 13:10\",\"UID\":\"BF842\"},{\"Ingresso\":\"27/05/2025 09:00\",\"Uscita\":\"27/05/2025 11:30\",\"UID\":\"CX150\"},{\"Ingresso\":\"27/05/2025 14:10\",\"Uscita\":\"27/05/2025 15:45\",\"UID\":\"AE231\"}]",
+        "payloadType": "json",
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "f88e27db10c25ad6"
+            ]
+        ]
     }
 ]

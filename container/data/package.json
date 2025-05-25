@@ -6,6 +6,7 @@
     "dependencies": {
         "node-red-contrib-remote": "~2.0.2",
         "node-red-contrib-ui-media": "~1.2.0",
-        "node-red-dashboard": "~3.6.5"
+        "node-red-dashboard": "~3.6.5",
+        "node-red-node-ui-table": "~0.4.4"
     }
 }
