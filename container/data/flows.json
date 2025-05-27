@@ -289,7 +289,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 480,
+        "x": 140,
         "y": 40,
         "wires": [
             [
@@ -317,7 +317,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 330,
         "y": 140,
         "wires": [
             [
@@ -345,7 +345,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 350,
+        "x": 110,
         "y": 140,
         "wires": [
             [
@@ -368,8 +368,8 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 840,
-        "y": 840,
+        "x": 920,
+        "y": 380,
         "wires": []
     },
     {
@@ -393,8 +393,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 490,
-        "y": 740,
+        "x": 750,
+        "y": 300,
         "wires": [
             [
                 "d496b0c8cf36d848"
@@ -409,47 +409,12 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 500,
-        "y": 840,
+        "x": 640,
+        "y": 380,
         "wires": [
             [
-                "2ac3d788d8da8507",
                 "838fee8f625fc1b1"
             ]
-        ]
-    },
-    {
-        "id": "2ac3d788d8da8507",
-        "type": "debug",
-        "z": "0b4896f60fec93c2",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 820,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "18b5401344896aea",
-        "type": "rbe",
-        "z": "0b4896f60fec93c2",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "topic",
-        "x": 670,
-        "y": 900,
-        "wires": [
-            []
         ]
     },
     {
@@ -471,8 +436,8 @@
         "max": "100",
         "step": 1,
         "className": "",
-        "x": 290,
-        "y": 640,
+        "x": 610,
+        "y": 220,
         "wires": [
             [
                 "712fbe7b45212052"
@@ -498,8 +463,8 @@
         "max": "100",
         "step": 1,
         "className": "",
-        "x": 660,
-        "y": 640,
+        "x": 880,
+        "y": 220,
         "wires": [
             [
                 "712fbe7b45212052"
@@ -530,7 +495,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 370,
+        "x": 110,
         "y": 240,
         "wires": []
     },
@@ -558,7 +523,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 760,
+        "x": 360,
         "y": 240,
         "wires": []
     },
@@ -600,8 +565,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 400,
-        "y": 340,
+        "x": 140,
+        "y": 320,
         "wires": [
             []
         ]
@@ -644,8 +609,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 760,
-        "y": 340,
+        "x": 380,
+        "y": 320,
         "wires": [
             []
         ]
@@ -663,13 +628,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 370,
-        "y": 440,
+        "x": 730,
+        "y": 40,
         "wires": [
             [
                 "1215487def2450bc",
-                "60cf66ffdd132057",
-                "4d85fc782f11087a"
+                "60cf66ffdd132057"
             ]
         ]
     },
@@ -692,8 +656,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 590,
-        "y": 540,
+        "x": 890,
+        "y": 140,
         "wires": [
             [
                 "4c42c3a448916190"
@@ -719,29 +683,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 270,
-        "y": 540,
+        "x": 610,
+        "y": 140,
         "wires": [
             [
                 "e668549997b8f5b9"
             ]
         ]
-    },
-    {
-        "id": "4d85fc782f11087a",
-        "type": "debug",
-        "z": "0b4896f60fec93c2",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 580,
-        "y": 420,
-        "wires": []
     },
     {
         "id": "38b361d8e16ab979",
@@ -1336,7 +1284,7 @@
         ],
         "outputs": 0,
         "cts": false,
-        "x": 470,
+        "x": 570,
         "y": 420,
         "wires": []
     },
@@ -1361,12 +1309,194 @@
         "topic": "",
         "payload": "[{\"Ingresso\":\"25/05/2025 17:30\",\"Uscita\":\"25/05/2025 19:30\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 08:15\",\"Uscita\":\"26/05/2025 10:00\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 11:45\",\"Uscita\":\"26/05/2025 13:10\",\"UID\":\"BF842\"},{\"Ingresso\":\"27/05/2025 09:00\",\"Uscita\":\"27/05/2025 11:30\",\"UID\":\"CX150\"},{\"Ingresso\":\"27/05/2025 14:10\",\"Uscita\":\"27/05/2025 15:45\",\"UID\":\"AE231\"}]",
         "payloadType": "json",
-        "x": 190,
+        "x": 150,
+        "y": 480,
+        "wires": [
+            [
+                "a9adceb96bafc2a6"
+            ]
+        ]
+    },
+    {
+        "id": "a9adceb96bafc2a6",
+        "type": "function",
+        "z": "e8602252ec8ae6cc",
+        "name": "function 1",
+        "func": "let reportData = flow.get(\"reportTableData\") || [];\n\nif (Array.isArray(msg.payload)) {\n    reportData = msg.payload;\n} else if (typeof msg.payload === 'object') {\n    reportData.push(msg.payload);\n}\n\nflow.set(\"reportTableData\", reportData);\n\n// ⚠️ Qui forziamo un nuovo riferimento → la ui_table lo “vede” come nuovo array\nmsg.payload = JSON.parse(JSON.stringify(reportData));\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
         "y": 420,
         "wires": [
             [
                 "f88e27db10c25ad6"
             ]
+        ]
+    },
+    {
+        "id": "e5b44bbf8e002557",
+        "type": "inject",
+        "z": "e8602252ec8ae6cc",
+        "name": "Prova inserimento nuova riga",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"Ingresso\":\"29/05/2025 17:30\",\"Uscita\":\"29/05/2025 19:30\",\"UID\":\"TEST5\"}",
+        "payloadType": "json",
+        "x": 300,
+        "y": 560,
+        "wires": [
+            [
+                "a9adceb96bafc2a6"
+            ]
+        ]
+    },
+    {
+        "id": "f13a65682b009b7e",
+        "type": "inject",
+        "z": "e8602252ec8ae6cc",
+        "name": "Pulizia tabella",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 590,
+        "y": 560,
+        "wires": [
+            [
+                "f88e27db10c25ad6"
+            ]
+        ]
+    },
+    {
+        "id": "d3ab887a6898f4c1",
+        "type": "mqtt in",
+        "z": "e8602252ec8ae6cc",
+        "name": "Report accessi",
+        "topic": "paolo32v/feeds/report",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "a9adceb96bafc2a6"
+            ]
+        ]
+    },
+    {
+        "id": "6948f2955fbf5fd4",
+        "type": "inject",
+        "z": "e8602252ec8ae6cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 700,
+        "wires": [
+            [
+                "42a3950a606b28ab"
+            ]
+        ]
+    },
+    {
+        "id": "42a3950a606b28ab",
+        "type": "function",
+        "z": "e8602252ec8ae6cc",
+        "name": "function 2",
+        "func": "let data = flow.get(\"reportTableData\") || [];\n\nlet csv = \"Ingresso,Uscita,UID\\n\";\n\ndata.forEach(row => {\n    csv += `${row.Ingresso},${row.Uscita},${row.UID}\\n`;\n});\n\nmsg.payload = csv;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 700,
+        "wires": [
+            [
+                "e8409966fbde42d2",
+                "75055beae777bc02"
+            ]
+        ]
+    },
+    {
+        "id": "e8409966fbde42d2",
+        "type": "debug",
+        "z": "e8602252ec8ae6cc",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "75055beae777bc02",
+        "type": "file",
+        "z": "e8602252ec8ae6cc",
+        "name": "",
+        "filename": "C:\\Users\\andre\\OneDrive\\Desktop\\test.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 690,
+        "y": 700,
+        "wires": [
+            []
         ]
     }
 ]
