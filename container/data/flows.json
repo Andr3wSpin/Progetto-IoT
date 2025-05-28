@@ -482,7 +482,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Temperatura",
-        "label": "gradi mammt",
+        "label": "°C",
         "format": "{{value}}",
         "min": 0,
         "max": "100",
@@ -510,7 +510,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Umidità",
-        "label": "units",
+        "label": "%",
         "format": "{{value}}",
         "min": "0",
         "max": "100",
@@ -797,11 +797,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 60,
-        "y": 60,
+        "x": 280,
+        "y": 40,
         "wires": [
             [
-                "446ad54b820d0286"
+                "aa3a5d7c4a94af1e"
             ]
         ]
     },
@@ -821,8 +821,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 470,
-        "y": 60,
+        "x": 310,
+        "y": 160,
         "wires": [
             [
                 "e10e9eb8955a7aab",
@@ -842,8 +842,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 60,
+        "x": 590,
+        "y": 160,
         "wires": [
             [
                 "167d2757444d0ef2",
@@ -864,8 +864,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 740,
-        "y": 140,
+        "x": 660,
+        "y": 260,
         "wires": []
     },
     {
@@ -880,8 +880,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 60,
+        "x": 760,
+        "y": 40,
         "wires": [
             [
                 "d2a9b9059476382b"
@@ -901,8 +901,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 520,
-        "y": 140,
+        "x": 360,
+        "y": 260,
         "wires": []
     },
     {
@@ -919,9 +919,36 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 930,
-        "y": 60,
+        "x": 850,
+        "y": 160,
         "wires": []
+    },
+    {
+        "id": "aa3a5d7c4a94af1e",
+        "type": "change",
+        "z": "47f835d6bae6e30e",
+        "name": "parser uid ricevuto",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.uid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 40,
+        "wires": [
+            [
+                "446ad54b820d0286"
+            ]
+        ]
     },
     {
         "id": "687cd543e8783ab5",
@@ -1029,7 +1056,7 @@
         "id": "c81d6ec9887c4776",
         "type": "mqtt out",
         "z": "819d5f2cd30dfca7",
-        "name": "DisattivaAllarme",
+        "name": "Disattiva Allarme",
         "topic": "paolo32v/feeds/alarm",
         "qos": "1",
         "retain": "",
@@ -1039,7 +1066,7 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 600,
+        "x": 610,
         "y": 300,
         "wires": []
     },
@@ -1232,7 +1259,7 @@
         "payload": "{\"stato_garage\":\"occupato\",\"stato_serranda\":\"chiusa\",\"stato_allarme\":\"disattivato\"}",
         "payloadType": "json",
         "x": 170,
-        "y": 300,
+        "y": 260,
         "wires": [
             [
                 "03295a4333285638",
@@ -1284,8 +1311,8 @@
         ],
         "outputs": 0,
         "cts": false,
-        "x": 570,
-        "y": 420,
+        "x": 590,
+        "y": 380,
         "wires": []
     },
     {
@@ -1309,8 +1336,8 @@
         "topic": "",
         "payload": "[{\"Ingresso\":\"25/05/2025 17:30\",\"Uscita\":\"25/05/2025 19:30\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 08:15\",\"Uscita\":\"26/05/2025 10:00\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 11:45\",\"Uscita\":\"26/05/2025 13:10\",\"UID\":\"BF842\"},{\"Ingresso\":\"27/05/2025 09:00\",\"Uscita\":\"27/05/2025 11:30\",\"UID\":\"CX150\"},{\"Ingresso\":\"27/05/2025 14:10\",\"Uscita\":\"27/05/2025 15:45\",\"UID\":\"AE231\"}]",
         "payloadType": "json",
-        "x": 150,
-        "y": 480,
+        "x": 110,
+        "y": 460,
         "wires": [
             [
                 "a9adceb96bafc2a6"
@@ -1321,7 +1348,7 @@
         "id": "a9adceb96bafc2a6",
         "type": "function",
         "z": "e8602252ec8ae6cc",
-        "name": "function 1",
+        "name": "riempimento tabella",
         "func": "let reportData = flow.get(\"reportTableData\") || [];\n\nif (Array.isArray(msg.payload)) {\n    reportData = msg.payload;\n} else if (typeof msg.payload === 'object') {\n    reportData.push(msg.payload);\n}\n\nflow.set(\"reportTableData\", reportData);\n\n// ⚠️ Qui forziamo un nuovo riferimento → la ui_table lo “vede” come nuovo array\nmsg.payload = JSON.parse(JSON.stringify(reportData));\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
@@ -1329,8 +1356,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 420,
+        "x": 370,
+        "y": 380,
         "wires": [
             [
                 "f88e27db10c25ad6"
@@ -1358,8 +1385,8 @@
         "topic": "",
         "payload": "{\"Ingresso\":\"29/05/2025 17:30\",\"Uscita\":\"29/05/2025 19:30\",\"UID\":\"TEST5\"}",
         "payloadType": "json",
-        "x": 300,
-        "y": 560,
+        "x": 260,
+        "y": 540,
         "wires": [
             [
                 "a9adceb96bafc2a6"
@@ -1387,8 +1414,8 @@
         "topic": "",
         "payload": "[]",
         "payloadType": "json",
-        "x": 590,
-        "y": 560,
+        "x": 570,
+        "y": 480,
         "wires": [
             [
                 "f88e27db10c25ad6"
@@ -1409,7 +1436,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 160,
-        "y": 400,
+        "y": 380,
         "wires": [
             [
                 "a9adceb96bafc2a6"
@@ -1417,39 +1444,10 @@
         ]
     },
     {
-        "id": "6948f2955fbf5fd4",
-        "type": "inject",
-        "z": "e8602252ec8ae6cc",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 700,
-        "wires": [
-            [
-                "42a3950a606b28ab"
-            ]
-        ]
-    },
-    {
         "id": "42a3950a606b28ab",
         "type": "function",
         "z": "e8602252ec8ae6cc",
-        "name": "function 2",
+        "name": "acquisizione dati tabella",
         "func": "let data = flow.get(\"reportTableData\") || [];\n\nlet csv = \"Ingresso,Uscita,UID\\n\";\n\ndata.forEach(row => {\n    csv += `${row.Ingresso},${row.Uscita},${row.UID}\\n`;\n});\n\nmsg.payload = csv;\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
@@ -1457,46 +1455,57 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 700,
+        "x": 470,
+        "y": 660,
         "wires": [
             [
-                "e8409966fbde42d2",
                 "75055beae777bc02"
             ]
         ]
     },
     {
-        "id": "e8409966fbde42d2",
-        "type": "debug",
-        "z": "e8602252ec8ae6cc",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 560,
-        "y": 640,
-        "wires": []
-    },
-    {
         "id": "75055beae777bc02",
         "type": "file",
         "z": "e8602252ec8ae6cc",
-        "name": "",
-        "filename": "C:\\Users\\andre\\OneDrive\\Desktop\\test.csv",
+        "name": "salvataggio file",
+        "filename": "data/report.csv",
         "filenameType": "str",
-        "appendNewline": true,
+        "appendNewline": false,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 690,
-        "y": 700,
+        "x": 700,
+        "y": 660,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "868c1cc048f0602a",
+        "type": "ui_button",
+        "z": "e8602252ec8ae6cc",
+        "name": "Salva report",
+        "group": "91e4adc1a34bf764",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Salva report",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 660,
+        "wires": [
+            [
+                "42a3950a606b28ab"
+            ]
         ]
     }
 ]
