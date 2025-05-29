@@ -213,9 +213,9 @@ nfc             = NFCReader(
     reset_pin=NFC_RESET_PIN
 )
 reset_btn       = Pin(RESET_BTN_PIN, Pin.IN, Pin.PULL_DOWN)
-reset_btn.irq(trigger=Pin.IRQ_FALLING, handler=lambda p: on_reset())
+reset_btn.irq(trigger=Pin.IRQ_RISING, handler=lambda p: on_reset())
 btn_shutter     = Pin(BTN_SHUTTER_PIN, Pin.IN, Pin.PULL_DOWN)
-btn_shutter.irq(trigger=Pin.IRQ_FALLING, handler=lambda p: on_shutter())
+btn_shutter.irq(trigger=Pin.IRQ_RISING, handler=lambda p: on_shutter())
 
 stoplight = Stoplight(
     red_pin=RED_PIN,
