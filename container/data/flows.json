@@ -281,7 +281,7 @@
         "type": "mqtt in",
         "z": "0b4896f60fec93c2",
         "name": "ReadVal",
-        "topic": "paolo32v/feeds/readVal",
+        "topic": "paolo32v/feeds/readVAL",
         "qos": "1",
         "datatype": "auto-detect",
         "broker": "4976286c874d8dae",
@@ -954,24 +954,24 @@
         "id": "687cd543e8783ab5",
         "type": "ui_button",
         "z": "819d5f2cd30dfca7",
-        "name": "Apri serranda",
+        "name": "Controllo serranda",
         "group": "b12857289083e19e",
         "order": 5,
         "width": 3,
         "height": 1,
         "passthru": false,
-        "label": "Apri serranda",
+        "label": "Apri / Chiudi serranda",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
         "icon": "",
-        "payload": "apri",
+        "payload": "",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 360,
-        "y": 80,
+        "x": 370,
+        "y": 120,
         "wires": [
             [
                 "2cd2e43387546614"
@@ -995,34 +995,6 @@
         "x": 620,
         "y": 120,
         "wires": []
-    },
-    {
-        "id": "f11ee0d62a124d4f",
-        "type": "ui_button",
-        "z": "819d5f2cd30dfca7",
-        "name": "Chiudi serranda",
-        "group": "b12857289083e19e",
-        "order": 6,
-        "width": 3,
-        "height": 1,
-        "passthru": false,
-        "label": "Chiudi serranda",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
-        "payload": "chiudi",
-        "payloadType": "str",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 360,
-        "y": 180,
-        "wires": [
-            [
-                "2cd2e43387546614"
-            ]
-        ]
     },
     {
         "id": "9a804b0cf4f7ca86",

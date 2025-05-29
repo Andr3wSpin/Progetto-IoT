@@ -1,7 +1,12 @@
 import uasyncio as asyncio
 import utime
 import _thread
-from machine import Pin
+import ujson
+from machine import Pin, reset, unique_id
+from umqtt.simple import MQTTClient
+import ubinascii
+from wlan_config import wlan
+from collections import deque
 
 from AMP import AMP  
 from animation_async import Animation
@@ -13,6 +18,33 @@ from DisplayUI       import DisplayUI
 from STEP_MOTOR_FULL import STEP_MOTOR_FULL
 from STOPLIGHT       import Stoplight
 
+# Adafruit IO settings
+AIO_USER = 'paolo32v'         
+AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'     #token 
+BROKER = 'io.adafruit.com'
+PORT = 1883
+
+# Topics declaration
+DHT_TOPIC_READ_VAL = f"{AIO_USER}/feeds/readVAL".encode()      # invia i valori misurati dal dht al broker 
+DHT_TOPIC_INIT_MAX = f"{AIO_USER}/feeds/initMAX".encode()      # inizializza gli slider di NodeRed con il valore iniziale di MAX_TEMP e MAX_HUM
+DHT_TOPIC_SET_MAX  = f"{AIO_USER}/feeds/setMAX".encode()       # cambia il valore di MAX_TEMP e MAX_HUM utilizzando i valori passati da NodeRed
+READ_NFC_TOPIC     = f"{AIO_USER}/feeds/readNFC".encode()      # invia al broker il codice UID letto
+CHECK_NFC_TOPIC    = f"{AIO_USER}/feeds/checkNFC".encode()     # riceve la risposta dal broker per la validazione del codice letto
+SHUTTER_TOPIC      = f"{AIO_USER}/feeds/shutter".encode()      # apertura / chiusura serranda da NodeRed
+ALARM_TOPIC        = f"{AIO_USER}/feeds/alarm".encode()        # disattivazione allarme da NodeRed
+REPORT_TOPIC       = f"{AIO_USER}/feeds/report".encode()       # genera un report con data e ora di ingresso e uscita e UID dell'utente
+INFO_GARAGE_TOPIC  = f"{AIO_USER}/feeds/infoGarage".encode()   # invia informazioni sullo stato del garage, della serrana e dell'allarme
+
+subscriptions_list = [DHT_TOPIC_SET_MAX, CHECK_NFC_TOPIC, SHUTTER_TOPIC, ALARM_TOPIC]
+
+# Global shared variables
+client = None
+msg_queue = deque((), 30)
+broker_connected = False
+
+# Initial temperature and humidity thresholds
+MAX_TEMP = 50
+MAX_HUM  = 60
 
 # Pin configuration
 SCL_PIN         = 38
@@ -42,10 +74,13 @@ car_in_garage     = False
 obstacle_detected = False
 security_alarm    = False
 fire_alarm        = False
-AUTHORIZED_UIDS   = {'12052F02'}
+#AUTHORIZED_UIDS   = {'12052F02'}
+
+shutter_status_map = {"closed": "Chiusa", "opened": "Aperta", "closing": "In chiusura", "opening": "In apertura"}
 
 from _thread import allocate_lock
 state_lock = allocate_lock()
+queue_lock = allocate_lock()
 
 # Event callbacks
 def on_nfc(uid_str):
@@ -53,16 +88,12 @@ def on_nfc(uid_str):
     if shutter_state != 'closed' or not uid_str:
         print("not closed")
         return
-    if uid_str in AUTHORIZED_UIDS:
-        print("autorizzato")
-        animation.set_state(Animation.ACCESS_ALLOWED)
-        amp.play('access_allowed.wav')
-        with state_lock:
-            shutter_state = 'opening'
-    else:
-        print("non autorizzato")
-        animation.set_state(Animation.ACCESS_DENIED)
-        amp.play('access_denied.wav')
+    
+    msg = ujson.dumps({
+        "uid": uid_str
+    })
+    with queue_lock:
+        msg_queue.append((READ_NFC_TOPIC, msg))
 
 
 def on_car_near(is_near):
@@ -83,14 +114,21 @@ def on_obstacle(is_near):
 
 def on_dht(temp, hum):
     global fire_alarm
-    if temp is not None and temp >= 50.0:
+    if temp is not None and temp > MAX_TEMP:
         fire_alarm = True
+
+    msg = ujson.dumps({
+        "temp": temp,
+        "hum":  hum
+    })
+    with queue_lock:
+        msg_queue.append((DHT_TOPIC_READ_VAL, msg))
 
 
 def on_reset():
     global security_alarm, fire_alarm
     security_alarm = False
-    fire_alarm     = False
+    fire_alarm     = Falseè
     animation.set_state(Animation.ANIMATION)
 
 
@@ -108,6 +146,53 @@ def on_limit_change(state: bool):
     if state and shutter_state == 'closing':
         with state_lock:
             shutter_state = 'closed'
+
+
+# Message handlers
+def dht_handler(msg):
+    global MAX_TEMP, MAX_HUM
+    msg = msg.decode()
+    data = ujson.loads(msg)
+
+    if 'max_temp' in data:
+        MAX_TEMP = data['max_temp']
+
+    if 'max_hum' in data:
+        MAX_HUM = data['max_hum']
+
+
+def nfc_handler(msg):
+    global  shutter_state
+    msg = msg.decode()
+
+    if msg == "1":
+        print("autorizzato")
+        animation.set_state(Animation.ACCESS_ALLOWED)
+        amp.play('access_allowed.wav')
+        with state_lock:
+            shutter_state = 'opening'
+    else:
+        print("non autorizzato")
+        animation.set_state(Animation.ACCESS_DENIED)
+        amp.play('access_denied.wav')
+
+
+# MQTT messages callback
+def sub_callback(topic, msg):
+    """
+    Richiama l'handler associato al topic del messaggio ricevuto
+    """
+    if topic == DHT_TOPIC_SET_MAX:
+        dht_handler(msg)
+
+    elif topic == CHECK_NFC_TOPIC:
+       nfc_handler(msg)
+
+    elif topic == SHUTTER_TOPIC:
+        on_shutter()
+
+    elif topic == ALARM_TOPIC:
+        on_reset()
 
 
 # Hardware instantiation
@@ -208,6 +293,7 @@ async def security_sm():
             last_car_state = car_in_garage
         await asyncio.sleep_ms(200)
 
+
 async def fire_sm():
     """
     Riproduce l'allarme incendio finché fire_alarm rimane True, controllando ogni secondo.
@@ -226,7 +312,73 @@ async def auto_toggle_sm():
             with state_lock:
                 shutter_state = 'closing'
 
+
+async def update_garage_info():
+    while True:
+        garage_status  = "Occupato" if car_in_garage else "Libero"
+        shutter_status = shutter_status_map[shutter_state]
+        alarm_status   = "Attivo" if fire_alarm or security_alarm else "Spento"
+        
+        msg = ujson.dumps({
+            "stato_garage": garage_status,
+            "stato serranda": shutter_status,
+            "stato_allarme": alarm_status
+        })
+        with queue_lock:
+            msg_queue.append((INFO_GARAGE_TOPIC, msg))
+        await asyncio.sleep_ms(5000)
+
+
+async def send_msg():
+    global client, broker_connected
+    while True:
+        if msg_queue:
+            with queue_lock:
+                topic, msg = msg_queue.popleft()
+                try:
+                    client.publish(topic, msg)
+                except OSError as e:
+                    broker_connected = False
+        await asyncio.sleep_ms(100)
+
+def connect_and_subscribe():
+    """
+    Connessione al broker MQTT e sottoscrizione ai topic
+    """
+    global client, broker_connected
+
+    client_id = ubinascii.hexlify(unique_id())
+    client = MQTTClient(client_id, BROKER, PORT, AIO_USER, AIO_KEY)
+    client.set_callback(sub_callback)
+    client.connect()
+    
+    for topic in subscriptions_list:
+        client.subscribe(topic)
+
+    broker_connected = True
+    print('Connessione al broker completata.')
+
+
+def restart_and_reconnect():
+    """
+    Riavvia il dispositivo se non riesce a connettersi al broker
+    """
+    utime.sleep(2)
+    reset()
+
+
+def init_sliders():
+    msg = ujson.dumps({
+            "max_temp": MAX_TEMP,
+            "max_hum": MAX_HUM,
+            }) 
+    with queue_lock:
+        msg_queue.append((DHT_TOPIC_INIT_MAX, msg))
+
+
 async def main():
+    global client, broker_connected
+
     asyncio.create_task(nfc.monitor(on_nfc,                read_interval_s=1))
     asyncio.create_task(car_sensor.detect_obj(on_car_near, threshold_cm=15, interval_s=2))
     asyncio.create_task(obstacle_sensor.detect_obj(on_obstacle, threshold_cm=15, interval_s=2))
@@ -237,10 +389,25 @@ async def main():
     asyncio.create_task(auto_toggle_sm())
     asyncio.create_task(animation.loop())
     asyncio.create_task(stoplight.run())
+    asyncio.create_task(update_garage_info())
 
-    while True:
-        await asyncio.sleep_ms(1000)
+    while wlan.isconnected() and broker_connected:
+        try:
+            client.check_msg()
+        except OSError as e:
+            broker_connected = False
+
+        await asyncio.sleep_ms(500)
+
+    print("Il dispositivo si è disconesso. Riconnessione in corso...")
+    restart_and_reconnect()
 
 if __name__ == '__main__':
+    try:
+        connect_and_subscribe()
+    except OSError as e:
+        print('Errore durante la connessione con il broker MQTT. Riconessione in corso...')
+        restart_and_reconnect()
     _thread.start_new_thread(shutter_thread, ())
+    init_sliders()
     asyncio.run(main())
