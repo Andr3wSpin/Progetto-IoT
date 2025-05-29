@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'     #token 
+AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -117,18 +117,19 @@ def on_dht(temp, hum):
     if temp is not None and temp > MAX_TEMP:
         fire_alarm = True
 
-    msg = ujson.dumps({
-        "temp": temp,
-        "hum":  hum
-    })
-    with queue_lock:
-        msg_queue.append((DHT_TOPIC_READ_VAL, msg))
+    if hum is not None:
+        msg = ujson.dumps({
+            "temp": temp,
+            "hum":  hum
+        })
+        with queue_lock:
+            msg_queue.append((DHT_TOPIC_READ_VAL, msg))
 
 
 def on_reset():
     global security_alarm, fire_alarm
     security_alarm = False
-    fire_alarm     = Falseè
+    fire_alarm     = False
     animation.set_state(Animation.ANIMATION)
 
 
