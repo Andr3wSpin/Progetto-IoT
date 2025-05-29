@@ -23,6 +23,7 @@ timeout = 10
 def restart():
     #print("Impossibile connettersi al wifi. Riconessione in corso...")
     oled.show_text("Impossibile connettersi al wifi.")
+    utime.sleep(1)
     oled.display.fill(0)
     oled.show_text("Riconessione in corso...")
     utime.sleep(2)
@@ -33,10 +34,11 @@ oled = DisplayUI(scl_pin=SCL_PIN, sda_pin=SDA_PIN)
 wlan.active(True)
 try:
     wlan.connect(WIFI_SSID, WIFI_PASSWORD)
+    oled.show_text("Connessione in corso...")
     for _ in range(timeout):
-        oled.show_text("Connessione in corso...")
         if wlan.isconnected():
             #print("Connessione al wifi riuscita.")
+            oled.display.fill(0)
             oled.show_text("Connessione wifi riuscita.")
             break
         utime.sleep(1)
