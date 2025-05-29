@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_VvvZ15jQhDtrg18z0VbZh0uhTHep'      
+AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'      
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -128,7 +128,7 @@ def on_dht(temp, hum):
 def on_reset():
     global security_alarm, fire_alarm
     security_alarm = False
-    fire_alarm     = False
+    fire_alarm     = Falseè
     animation.set_state(Animation.ANIMATION)
 
 

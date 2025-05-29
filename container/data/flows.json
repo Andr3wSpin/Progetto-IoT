@@ -48,7 +48,7 @@
     {
         "id": "4976286c874d8dae",
         "type": "mqtt-broker",
-        "name": "zio_pera",
+        "name": "AdaBroker",
         "broker": "io.adafruit.com",
         "port": 1883,
         "clientid": "",
@@ -281,7 +281,7 @@
         "type": "mqtt in",
         "z": "0b4896f60fec93c2",
         "name": "ReadVal",
-        "topic": "paolo32v/feeds/DHT/readVal",
+        "topic": "paolo32v/feeds/readVal",
         "qos": "1",
         "datatype": "auto-detect",
         "broker": "4976286c874d8dae",
@@ -628,7 +628,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 730,
+        "x": 710,
         "y": 40,
         "wires": [
             [
@@ -880,7 +880,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
+        "x": 780,
         "y": 40,
         "wires": [
             [
@@ -992,7 +992,7 @@
         "correl": "",
         "expiry": "",
         "broker": "4976286c874d8dae",
-        "x": 600,
+        "x": 620,
         "y": 120,
         "wires": []
     },
@@ -1269,53 +1269,6 @@
         ]
     },
     {
-        "id": "f88e27db10c25ad6",
-        "type": "ui_table",
-        "z": "e8602252ec8ae6cc",
-        "group": "91e4adc1a34bf764",
-        "name": "Report table",
-        "order": 1,
-        "width": "6",
-        "height": "4",
-        "columns": [
-            {
-                "field": "Ingresso",
-                "title": "Ingresso",
-                "width": "",
-                "align": "left",
-                "formatter": "plaintext",
-                "formatterParams": {
-                    "target": "_blank"
-                }
-            },
-            {
-                "field": "Uscita",
-                "title": "Uscita",
-                "width": "",
-                "align": "left",
-                "formatter": "plaintext",
-                "formatterParams": {
-                    "target": "_blank"
-                }
-            },
-            {
-                "field": "UID",
-                "title": "UID",
-                "width": "",
-                "align": "left",
-                "formatter": "plaintext",
-                "formatterParams": {
-                    "target": "_blank"
-                }
-            }
-        ],
-        "outputs": 0,
-        "cts": false,
-        "x": 590,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "04ab1db7314b3712",
         "type": "inject",
         "z": "e8602252ec8ae6cc",
@@ -1507,5 +1460,52 @@
                 "42a3950a606b28ab"
             ]
         ]
+    },
+    {
+        "id": "f88e27db10c25ad6",
+        "type": "ui_table",
+        "z": "e8602252ec8ae6cc",
+        "group": "91e4adc1a34bf764",
+        "name": "Report table",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "Ingresso",
+                "title": "Ingresso",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "Uscita",
+                "title": "Uscita",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "UID",
+                "title": "UID",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 590,
+        "y": 380,
+        "wires": []
     }
 ]
