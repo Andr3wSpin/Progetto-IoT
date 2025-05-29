@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'
+AIO_KEY = 'aio_BIAh84Ppey4lL7KJwFeyVsJsCYAE'
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -333,8 +333,8 @@ async def update_garage_info():
 async def send_msg():
     global client, broker_connected
     while True:
-        if msg_queue:
-            with queue_lock:
+        with queue_lock:
+            if msg_queue:
                 topic, msg = msg_queue.popleft()
                 try:
                     client.publish(topic, msg)
