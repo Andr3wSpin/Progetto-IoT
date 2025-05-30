@@ -390,6 +390,7 @@ async def main():
     asyncio.create_task(auto_toggle_sm())
     asyncio.create_task(animation.loop())
     asyncio.create_task(stoplight.run())
+    asyncio.create_task(send_msg())
     asyncio.create_task(update_garage_info())
 
     while wlan.isconnected() and broker_connected:
