@@ -144,3 +144,4 @@ class Animation:
             else:
                 # stato sconosciuto: torna ad animazione
                 self.state = Animation.ANIMATION
+            await asyncio.sleep_ms(1000)

@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_BIAh84Ppey4lL7KJwFeyVsJsCYAE'
+AIO_KEY = 'aio_rUMV64VHtaJsxZarmH9P55jAdksc'
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -89,11 +89,14 @@ def on_nfc(uid_str):
         print("not closed")
         return
     
-    msg = ujson.dumps({
-        "uid": uid_str
-    })
-    with queue_lock:
-        msg_queue.append((READ_NFC_TOPIC, msg))
+    if not car_in_garage:
+        msg = ujson.dumps({
+            "uid": uid_str
+        })
+        with queue_lock:
+            msg_queue.append((READ_NFC_TOPIC, msg))
+    else:
+        print("Garage occupato.")
 
 
 def on_car_near(is_near):
@@ -307,6 +310,7 @@ async def fire_sm():
         await asyncio.sleep_ms(1000)
 
 async def auto_toggle_sm():
+    global shutter_state
     while True:
         await asyncio.sleep_ms(10000)
         if shutter_state == 'opened':
@@ -322,13 +326,12 @@ async def update_garage_info():
         
         msg = ujson.dumps({
             "stato_garage": garage_status,
-            "stato serranda": shutter_status,
+            "stato_serranda": shutter_status,
             "stato_allarme": alarm_status
         })
         with queue_lock:
             msg_queue.append((INFO_GARAGE_TOPIC, msg))
-        await asyncio.sleep_ms(5000)
-
+        await asyncio.sleep(1)
 
 async def send_msg():
     global client, broker_connected
