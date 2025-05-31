@@ -30,8 +30,8 @@ import site
 
 class Sta:
 
-   AP = "STASI_WIFI" 
-   PWD = "Casa#012345#"
+   AP = "" 
+   PWD = ""
 
    def __init__(my, ap='', pwd=''):
       network.WLAN(network.AP_IF).active(False) # disable access point
