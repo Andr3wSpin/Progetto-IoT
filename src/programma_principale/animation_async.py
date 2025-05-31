@@ -130,7 +130,7 @@ class Animation:
             elif st == Animation.ACCESS_DENIED:
                 self.oled.display.fill(0)
                 self.oled.show_text("Accesso negato", x=50, y=50)
-                await asyncio.sleep(5)
+                await asyncio.sleep(2)
                 self.state = Animation.ANIMATION
 
             # ACCESSO CONSENTITO
@@ -138,9 +138,10 @@ class Animation:
                 self.oled.display.fill(0)
                 self.oled.show_text("Accesso", x=50, y=30)
                 self.oled.show_text("consentito", x=50, y=70)
-                await asyncio.sleep(5)
+                await asyncio.sleep(2)
                 self.state = Animation.ANIMATION
                 
             else:
                 # stato sconosciuto: torna ad animazione
                 self.state = Animation.ANIMATION
+            await asyncio.sleep_ms(1000)

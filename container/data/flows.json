@@ -797,11 +797,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 280,
+        "x": 160,
         "y": 40,
         "wires": [
             [
-                "aa3a5d7c4a94af1e"
+                "aa3a5d7c4a94af1e",
+                "945b5806aa981b40"
             ]
         ]
     },
@@ -826,7 +827,7 @@
         "wires": [
             [
                 "e10e9eb8955a7aab",
-                "9b457a6181c54298"
+                "493e36d04e66cb97"
             ]
         ]
     },
@@ -846,64 +847,31 @@
         "y": 160,
         "wires": [
             [
-                "167d2757444d0ef2",
-                "fd034633e0f0fdfb"
+                "fd034633e0f0fdfb",
+                "d5c330b1afb4145a"
             ]
         ]
-    },
-    {
-        "id": "167d2757444d0ef2",
-        "type": "debug",
-        "z": "47f835d6bae6e30e",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 660,
-        "y": 260,
-        "wires": []
     },
     {
         "id": "446ad54b820d0286",
         "type": "function",
         "z": "47f835d6bae6e30e",
         "name": "preparazione richiesta",
-        "func": "const chiave = encodeURIComponent(msg.payload);\nmsg.url = `https://api.baserow.io/api/database/rows/table/532602/?user_field_names=true&filter__chiave__equal=${chiave}`;\nmsg.headers = {\n    \"Authorization\": \"Token hoTnIVgq345gSqgQLbX654eVweYUKu7k\"\n};\n// Salva il valore cercato per usarlo dopo\nmsg.chiaveCercata = msg.payload;\nreturn msg;",
+        "func": "const chiave = encodeURIComponent(msg.payload);\nmsg.url = `https://api.baserow.io/api/database/rows/table/532602/?user_field_names=true&filter__chiave__equal=${chiave}`;\nmsg.headers = {\n    \"Authorization\": \"Token GanSBXILzh8DxvTPkl8Oy7kh8gIbQarL\"\n};\n// Salva il valore cercato per usarlo dopo\nmsg.chiaveCercata = msg.payload;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 740,
         "y": 40,
         "wires": [
             [
-                "d2a9b9059476382b"
+                "d2a9b9059476382b",
+                "f1ae7bdf51394c76"
             ]
         ]
-    },
-    {
-        "id": "9b457a6181c54298",
-        "type": "debug",
-        "z": "47f835d6bae6e30e",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 260,
-        "wires": []
     },
     {
         "id": "fd034633e0f0fdfb",
@@ -920,7 +888,7 @@
         "expiry": "",
         "broker": "4976286c874d8dae",
         "x": 850,
-        "y": 160,
+        "y": 180,
         "wires": []
     },
     {
@@ -946,9 +914,90 @@
         "y": 40,
         "wires": [
             [
-                "446ad54b820d0286"
+                "446ad54b820d0286",
+                "655a21f54cb82090"
             ]
         ]
+    },
+    {
+        "id": "945b5806aa981b40",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "655a21f54cb82090",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f1ae7bdf51394c76",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "493e36d04e66cb97",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d5c330b1afb4145a",
+        "type": "debug",
+        "z": "47f835d6bae6e30e",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 260,
+        "wires": []
     },
     {
         "id": "687cd543e8783ab5",

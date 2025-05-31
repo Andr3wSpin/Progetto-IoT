@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_WYgF56MUytvkbPPsixQVBkWVfI7o'
+AIO_KEY = 'aio_vTyN30FUXO6C7qYJToC3KDtTMqgs'
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -85,15 +85,17 @@ queue_lock = allocate_lock()
 # Event callbacks
 def on_nfc(uid_str):
     global shutter_state
-    if shutter_state != 'closed' or not uid_str:
+    print("UID: ", uid_str)
+    if shutter_state != 'closed':
         print("not closed")
         return
-    
-    msg = ujson.dumps({
-        "uid": uid_str
-    })
-    with queue_lock:
-        msg_queue.append((READ_NFC_TOPIC, msg))
+
+    if not car_in_garage and uid_str is not None:
+        msg = ujson.dumps({
+            "uid": uid_str
+        })
+        with queue_lock:
+            msg_queue.append((READ_NFC_TOPIC, msg))
 
 
 def on_car_near(is_near):
@@ -108,6 +110,7 @@ def on_car_near(is_near):
 
 
 def on_obstacle(is_near):
+    print(is_near)
     global obstacle_detected
     obstacle_detected = is_near
 
@@ -166,6 +169,7 @@ def nfc_handler(msg):
     global  shutter_state
     msg = msg.decode()
 
+    print("msg nfc: ", msg)
     if msg == "1":
         print("autorizzato")
         animation.set_state(Animation.ACCESS_ALLOWED)
@@ -269,6 +273,7 @@ def shutter_thread():
 
         elif shutter_state == 'opened':
             if not last_car_in and car_in_garage:
+                print("gay")
                 with state_lock:
                     shutter_state = 'closing'
             else:
@@ -307,8 +312,9 @@ async def fire_sm():
         await asyncio.sleep_ms(1000)
 
 async def auto_toggle_sm():
+    global shutter_state
     while True:
-        await asyncio.sleep_ms(10000)
+        await asyncio.sleep_ms(30000)
         if shutter_state == 'opened':
             with state_lock:
                 shutter_state = 'closing'
@@ -320,27 +326,28 @@ async def update_garage_info():
         shutter_status = shutter_status_map[shutter_state]
         alarm_status   = "Attivo" if fire_alarm or security_alarm else "Spento"
         
+        print("shutter state:", shutter_state)
+        
         msg = ujson.dumps({
             "stato_garage": garage_status,
-            "stato serranda": shutter_status,
+            "stato_serranda": shutter_status,
             "stato_allarme": alarm_status
         })
         with queue_lock:
             msg_queue.append((INFO_GARAGE_TOPIC, msg))
-        await asyncio.sleep_ms(5000)
-
+        await asyncio.sleep(2)
 
 async def send_msg():
     global client, broker_connected
     while True:
-        if msg_queue:
-            with queue_lock:
+        with queue_lock:
+            if msg_queue:
                 topic, msg = msg_queue.popleft()
                 try:
                     client.publish(topic, msg)
                 except OSError as e:
                     broker_connected = False
-        await asyncio.sleep_ms(100)
+        await asyncio.sleep_ms(150)
 
 def connect_and_subscribe():
     """
@@ -380,16 +387,17 @@ def init_sliders():
 async def main():
     global client, broker_connected
 
-    asyncio.create_task(nfc.monitor(on_nfc,                read_interval_s=1))
-    asyncio.create_task(car_sensor.detect_obj(on_car_near, threshold_cm=15, interval_s=2))
-    asyncio.create_task(obstacle_sensor.detect_obj(on_obstacle, threshold_cm=15, interval_s=2))
+    asyncio.create_task(nfc.monitor(on_nfc,                read_interval_s=2))
+    asyncio.create_task(car_sensor.detect_obj(on_car_near, threshold_cm=6, interval_s=2))
+    asyncio.create_task(obstacle_sensor.detect_obj(on_obstacle, threshold_cm=5, interval_s=1))
     asyncio.create_task(limit_switch.monitor(on_limit_change, interval_ms=200))
-    asyncio.create_task(read_dht22(pin_num=DHT22_PIN,       interval_s=10, callback=on_dht))
+    asyncio.create_task(read_dht22(pin_num=DHT22_PIN,       interval_s=20, callback=on_dht))
     asyncio.create_task(security_sm())
     asyncio.create_task(fire_sm())
     asyncio.create_task(auto_toggle_sm())
     asyncio.create_task(animation.loop())
     asyncio.create_task(stoplight.run())
+    asyncio.create_task(send_msg())
     asyncio.create_task(update_garage_info())
 
     while wlan.isconnected() and broker_connected:
