@@ -20,7 +20,11 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
+<<<<<<< HEAD
 AIO_KEY = 'aio_vTyN30FUXO6C7qYJToC3KDtTMqgs'
+=======
+AIO_KEY = 'aio_rUMV64VHtaJsxZarmH9P55jAdksc'
+>>>>>>> 98ad2d1d51dec4e1bd227b72140ac5fffc7c3f89
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -89,13 +93,23 @@ def on_nfc(uid_str):
     if shutter_state != 'closed':
         print("not closed")
         return
+<<<<<<< HEAD
 
     if not car_in_garage and uid_str is not None:
+=======
+    
+    if not car_in_garage:
+>>>>>>> 98ad2d1d51dec4e1bd227b72140ac5fffc7c3f89
         msg = ujson.dumps({
             "uid": uid_str
         })
         with queue_lock:
             msg_queue.append((READ_NFC_TOPIC, msg))
+<<<<<<< HEAD
+=======
+    else:
+        print("Garage occupato.")
+>>>>>>> 98ad2d1d51dec4e1bd227b72140ac5fffc7c3f89
 
 
 def on_car_near(is_near):
@@ -335,7 +349,11 @@ async def update_garage_info():
         })
         with queue_lock:
             msg_queue.append((INFO_GARAGE_TOPIC, msg))
+<<<<<<< HEAD
         await asyncio.sleep(2)
+=======
+        await asyncio.sleep(1)
+>>>>>>> 98ad2d1d51dec4e1bd227b72140ac5fffc7c3f89
 
 async def send_msg():
     global client, broker_connected
