@@ -1421,7 +1421,7 @@
         "height": "4",
         "columns": [
             {
-                "field": "Ingresso",
+                "field": "ingresso",
                 "title": "Ingresso",
                 "width": "",
                 "align": "left",
@@ -1431,7 +1431,7 @@
                 }
             },
             {
-                "field": "Uscita",
+                "field": "uscita",
                 "title": "Uscita",
                 "width": "",
                 "align": "left",
@@ -1441,7 +1441,7 @@
                 }
             },
             {
-                "field": "UID",
+                "field": "uid",
                 "title": "UID",
                 "width": "",
                 "align": "left",

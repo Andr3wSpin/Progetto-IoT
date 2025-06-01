@@ -42,6 +42,12 @@ client = None
 msg_queue = deque((), 30)
 broker_connected = False
 
+# Access report info
+entry_time         = None
+exit_time          = None
+current_uid        = None
+authorized_to_open = False
+
 # Initial temperature and humidity thresholds
 MAX_TEMP = 50
 MAX_HUM  = 60
@@ -84,13 +90,14 @@ queue_lock = allocate_lock()
 
 # Event callbacks
 def on_nfc(uid_str):
-    global shutter_state
+    global shutter_state, current_uid
     print("UID: ", uid_str)
     if shutter_state != 'closed':
         print("not closed")
         return
 
     if not car_in_garage and uid_str is not None:
+        current_uid = uid_str
         msg = ujson.dumps({
             "uid": uid_str
         })
@@ -166,7 +173,7 @@ def dht_handler(msg):
 
 
 def nfc_handler(msg):
-    global  shutter_state
+    global  shutter_state, current_uid, authorized_to_open
     msg = msg.decode()
 
     print("msg nfc: ", msg)
@@ -174,12 +181,15 @@ def nfc_handler(msg):
         print("autorizzato")
         animation.set_state(Animation.ACCESS_ALLOWED)
         amp.play('access_allowed.wav')
+        authorized_to_open = True
         with state_lock:
             shutter_state = 'opening'
     else:
         print("non autorizzato")
         animation.set_state(Animation.ACCESS_DENIED)
         amp.play('access_denied.wav')
+        authorized_to_open = False
+        current_uid = None
 
 
 # MQTT messages callback
@@ -199,6 +209,42 @@ def sub_callback(topic, msg):
     elif topic == ALARM_TOPIC:
         on_reset()
 
+
+# Access report methods
+def create_entrance_report():
+    global entry_time, exit_time
+    entry_time = get_current_time()
+    exit_time = None
+    msg = ujson.dumps({
+        "ingresso": entry_time,
+        "uscita":   "",
+        "uid":      current_uid
+    })
+    with queue_lock:
+        msg_queue.append((REPORT_TOPIC, msg))
+
+
+def create_exit_report():
+    global entry_time, exit_time, current_uid
+    exit_time = get_current_time()
+    msg = ujson.dumps({
+        "ingresso": entry_time,
+        "uscita":   exit_time,
+        "uid":      current_uid
+    })
+    with queue_lock:
+        msg_queue.append((REPORT_TOPIC, msg))
+    entry_time  = None
+    exit_time   = None 
+    current_uid = None
+
+
+def get_current_time():
+    """
+    Ottiene data e ora e la restituisce nel formato AAAA-MM-GG HH:MM
+    """
+    t = utime.localtime()
+    return "{:04}-{:02}-{:02} {:02}:{:02}".format(t[0], t[1], t[2], t[3], t[4])
 
 # Hardware instantiation
 oled          = DisplayUI(scl_pin=SCL_PIN, sda_pin=SDA_PIN)
@@ -234,10 +280,9 @@ stoplight = Stoplight(
     poll_ms=200
 )
 
-
 # THREAD per il motore
 def shutter_thread():
-    global shutter_state, obstacle_detected, car_in_garage
+    global shutter_state, obstacle_detected, car_in_garage, authorized_to_open
 
     delay_ms    = 8
     full_steps  = 2048
@@ -251,6 +296,10 @@ def shutter_thread():
             with state_lock:
                 shutter_state = 'opened'
             last_car_in = car_in_garage
+
+        if authorized_to_open:
+            create_entrance_report()
+            authorized_to_open = False
 
         elif shutter_state == 'closing':
             count = 0
@@ -272,8 +321,10 @@ def shutter_thread():
                     shutter_state = 'closed'
 
         elif shutter_state == 'opened':
-            if not last_car_in and car_in_garage:
-                print("gay")
+            if last_car_in and not car_in_garage:
+                create_exit_report()
+                last_car_in = False
+            elif not last_car_in and car_in_garage:
                 with state_lock:
                     shutter_state = 'closing'
             else:
