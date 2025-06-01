@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_eZXE00aD9SoiDpAUhBrCmbxfTtJ3'
+AIO_KEY = ''
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
