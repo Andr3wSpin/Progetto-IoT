@@ -10,7 +10,7 @@
     {
         "id": "a2050da58b9ceffe",
         "type": "tab",
-        "label": "Audio + Video",
+        "label": "Video",
         "disabled": false,
         "info": "",
         "env": []
@@ -193,6 +193,15 @@
         "hidden": false
     },
     {
+        "id": "eacb43e671c320d1",
+        "type": "ui_tab",
+        "name": "Controllo",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "e0ff5d3e06141d43",
         "type": "ui_group",
         "name": "Temperatura",
@@ -224,15 +233,6 @@
         "width": "12",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "eacb43e671c320d1",
-        "type": "ui_tab",
-        "name": "Controllo",
-        "icon": "dashboard",
-        "order": 3,
-        "disabled": false,
-        "hidden": false
     },
     {
         "id": "91e4adc1a34bf764",
@@ -414,6 +414,82 @@
         "wires": [
             [
                 "838fee8f625fc1b1"
+            ]
+        ]
+    },
+    {
+        "id": "ea94ae7d1207478f",
+        "type": "mqtt in",
+        "z": "0b4896f60fec93c2",
+        "name": "InitMAX",
+        "topic": "paolo32v/feeds/initMAX",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4976286c874d8dae",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 40,
+        "wires": [
+            [
+                "1215487def2450bc",
+                "60cf66ffdd132057"
+            ]
+        ]
+    },
+    {
+        "id": "1215487def2450bc",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_umi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.max_hum",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "4c42c3a448916190"
+            ]
+        ]
+    },
+    {
+        "id": "60cf66ffdd132057",
+        "type": "change",
+        "z": "0b4896f60fec93c2",
+        "name": "parser_temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.max_temp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 140,
+        "wires": [
+            [
+                "e668549997b8f5b9"
             ]
         ]
     },
@@ -616,82 +692,6 @@
         ]
     },
     {
-        "id": "ea94ae7d1207478f",
-        "type": "mqtt in",
-        "z": "0b4896f60fec93c2",
-        "name": "InitMAX",
-        "topic": "paolo32v/feeds/initMAX",
-        "qos": "1",
-        "datatype": "auto-detect",
-        "broker": "4976286c874d8dae",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 690,
-        "y": 40,
-        "wires": [
-            [
-                "1215487def2450bc",
-                "60cf66ffdd132057"
-            ]
-        ]
-    },
-    {
-        "id": "1215487def2450bc",
-        "type": "change",
-        "z": "0b4896f60fec93c2",
-        "name": "parser_umi",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.max_hum",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 890,
-        "y": 140,
-        "wires": [
-            [
-                "4c42c3a448916190"
-            ]
-        ]
-    },
-    {
-        "id": "60cf66ffdd132057",
-        "type": "change",
-        "z": "0b4896f60fec93c2",
-        "name": "parser_temp",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.max_temp",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 610,
-        "y": 140,
-        "wires": [
-            [
-                "e668549997b8f5b9"
-            ]
-        ]
-    },
-    {
         "id": "38b361d8e16ab979",
         "type": "ui_template",
         "z": "a2050da58b9ceffe",
@@ -700,88 +700,16 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<div style=\"text-align:center; height: 500px; overflow: hidden;\">\n  <img src=\"http://212.67.236.61/mjpg/video.mjpg\" style=\"max-width:100%; height:100%; object-fit: cover;\">\n</div>\n\n\n",
+        "format": "<div style=\"text-align:center; height: 500px; overflow: hidden;\">\n  <img src=\"http://192.168.1.50/live\" style=\"max-width:100%; height:100%; object-fit: cover;\">\n</div>\n\n\n",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 610,
-        "y": 160,
+        "x": 370,
+        "y": 100,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "1d8c2729e6f4a8b6",
-        "type": "ui_template",
-        "z": "a2050da58b9ceffe",
-        "group": "7d662f0fd2e94d1e",
-        "name": "Output audio",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "<div style=\"display: flex; align-items: center;\">\n    <span style=\"margin-right: 10px;\">🔊</span>\n    <input type=\"range\" id=\"volume-control\" min=\"0\" max=\"100\" value=\"100\" />\n</div>\n\n<script>\n(function(scope) {\n    const AudioContext = window.AudioContext || window.webkitAudioContext;\n    const audioCtx = new AudioContext();\n    const gainNode = audioCtx.createGain();\n    gainNode.gain.value = 1;\n    gainNode.connect(audioCtx.destination);\n\n    const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';\n    const wsUrl = proto + location.host + '/audio';\n    const ws = new WebSocket(wsUrl);\n    ws.binaryType = 'arraybuffer';\n\n    ws.onopen = () => console.log(\"[UI] WS connesso a\", wsUrl);\n    ws.onerror = e => console.error(\"[UI] WS error\", e);\n\n    ws.onmessage = async ({ data }) => {\n        try {\n            const audioBuf = await audioCtx.decodeAudioData(data);\n            const src = audioCtx.createBufferSource();\n            src.buffer = audioBuf;\n            src.connect(gainNode);\n            src.start();\n        } catch (err) {\n            console.error(\"[UI] decodeAudioData failed:\", err);\n        }\n    };\n\n    const volumeSlider = document.getElementById(\"volume-control\");\n    volumeSlider.addEventListener(\"input\", () => {\n        gainNode.gain.value = volumeSlider.value / 100;\n    });\n\n    // Sblocca audioContext al primo input\n    volumeSlider.addEventListener('change', () => {\n        if (audioCtx.state === 'suspended') {\n            audioCtx.resume();\n        }\n    });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 610,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "fa57f9aa342847ae",
-        "type": "websocket out",
-        "z": "a2050da58b9ceffe",
-        "name": "websocket_out_audio",
-        "server": "e354f1ebb9edded8",
-        "client": "",
-        "x": 640,
-        "y": 80,
-        "wires": [],
-        "info": " {\r\n  \"id\": \"wxyz5678\",\r\n  \"type\": \"websocket out\",\r\n  \"name\": \"Audio WebSocket Sender\",\r\n  \"path\": \"/audio\", // Endpoint WebSocket\r\n  \"server\": \"\",     // Usa il server WebSocket integrato di Node-RED\r\n  \"client\": \"\",\r\n  \"wires\": []\r\n}"
-    },
-    {
-        "id": "ac948c51e33ace71",
-        "type": "function",
-        "z": "a2050da58b9ceffe",
-        "name": "raw_to_wav",
-        "func": "// Function: wrap-raw-to-wav\nconst pcm = msg.payload;         // Buffer raw PCM (16-bit LE, mono, 8kHz)\n\n// prepara header WAV (44 byte)\nconst header = Buffer.alloc(44);\nfunction writeString(buf, off, str) { buf.write(str, off, 'ascii'); }\n\n// RIFF chunk descriptor\nwriteString(header, 0, 'RIFF');\nheader.writeUInt32LE(pcm.length + 36, 4);  // file size - 8\nwriteString(header, 8, 'WAVE');\n\n// fmt subchunk\nwriteString(header, 12, 'fmt ');\nheader.writeUInt32LE(16, 16);      // subchunk1 size\nheader.writeUInt16LE(1, 20);       // PCM = 1\nheader.writeUInt16LE(1, 22);       // numChannels\nheader.writeUInt32LE(8000, 24);    // sampleRate\nheader.writeUInt32LE(8000 * 2, 28);// byteRate = sampleRate*blockAlign\nheader.writeUInt16LE(2, 32);       // blockAlign = numChannels*bytesPerSample\nheader.writeUInt16LE(16, 34);      // bitsPerSample\n\n// data subchunk\nwriteString(header, 36, 'data');\nheader.writeUInt32LE(pcm.length, 40);\n\n// concat header + payload\nmsg.payload     = Buffer.concat([header, pcm]);\nmsg.payloadType = 'bin';\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 80,
-        "wires": [
-            [
-                "fa57f9aa342847ae"
-            ]
-        ]
-    },
-    {
-        "id": "17c7248d385ec9e6",
-        "type": "udp in",
-        "z": "a2050da58b9ceffe",
-        "name": "udp_in_audio",
-        "iface": "",
-        "port": "12345",
-        "ipv": "udp4",
-        "multicast": "false",
-        "group": "",
-        "datatype": "buffer",
-        "x": 230,
-        "y": 80,
-        "wires": [
-            [
-                "ac948c51e33ace71"
-            ]
         ]
     },
     {
@@ -1000,6 +928,42 @@
         "wires": []
     },
     {
+        "id": "2cd2e43387546614",
+        "type": "mqtt out",
+        "z": "819d5f2cd30dfca7",
+        "name": "AzionaSerranda",
+        "topic": "paolo32v/feeds/shutter",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4976286c874d8dae",
+        "x": 620,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c81d6ec9887c4776",
+        "type": "mqtt out",
+        "z": "819d5f2cd30dfca7",
+        "name": "Disattiva Allarme",
+        "topic": "paolo32v/feeds/alarm",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4976286c874d8dae",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    },
+    {
         "id": "687cd543e8783ab5",
         "type": "ui_button",
         "z": "819d5f2cd30dfca7",
@@ -1028,24 +992,6 @@
         ]
     },
     {
-        "id": "2cd2e43387546614",
-        "type": "mqtt out",
-        "z": "819d5f2cd30dfca7",
-        "name": "AzionaSerranda",
-        "topic": "paolo32v/feeds/shutter",
-        "qos": "1",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "4976286c874d8dae",
-        "x": 620,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "9a804b0cf4f7ca86",
         "type": "ui_button",
         "z": "819d5f2cd30dfca7",
@@ -1072,87 +1018,6 @@
                 "c81d6ec9887c4776"
             ]
         ]
-    },
-    {
-        "id": "c81d6ec9887c4776",
-        "type": "mqtt out",
-        "z": "819d5f2cd30dfca7",
-        "name": "Disattiva Allarme",
-        "topic": "paolo32v/feeds/alarm",
-        "qos": "1",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "4976286c874d8dae",
-        "x": 610,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "8564eb52e1d1d584",
-        "type": "ui_text",
-        "z": "e8602252ec8ae6cc",
-        "group": "b12857289083e19e",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "Stato garage",
-        "label": "Stato garage:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 610,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "0ef65e7eefa4f4a7",
-        "type": "ui_text",
-        "z": "e8602252ec8ae6cc",
-        "group": "b12857289083e19e",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "Stato serranda",
-        "label": "Stato serranda:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 620,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "d2cb3e4f51f7125a",
-        "type": "ui_text",
-        "z": "e8602252ec8ae6cc",
-        "group": "b12857289083e19e",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "Stato allarme",
-        "label": "Stato allarme:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 610,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "f9dfdb04f10cf33e",
@@ -1481,6 +1346,69 @@
                 "42a3950a606b28ab"
             ]
         ]
+    },
+    {
+        "id": "8564eb52e1d1d584",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Stato garage",
+        "label": "Stato garage:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0ef65e7eefa4f4a7",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Stato serranda",
+        "label": "Stato serranda:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d2cb3e4f51f7125a",
+        "type": "ui_text",
+        "z": "e8602252ec8ae6cc",
+        "group": "b12857289083e19e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Stato allarme",
+        "label": "Stato allarme:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 220,
+        "wires": []
     },
     {
         "id": "f88e27db10c25ad6",
