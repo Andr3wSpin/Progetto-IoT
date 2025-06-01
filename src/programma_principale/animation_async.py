@@ -7,8 +7,9 @@ class Animation:
     ANIMATION       = 0
     ACCESS_DENIED   = 1
     ACCESS_ALLOWED  = 2
+    CHECK_PERMISSION = 3
 
-    def _init_(self, oled: DisplayUI, hb: int = 11, car_width: int = 126):
+    def __init__(self, oled: DisplayUI, hb: int = 11, car_width: int = 126):
         # stato corrente (di default animazione)
         self.state = Animation.ANIMATION
 
@@ -140,7 +141,15 @@ class Animation:
                 self.oled.show_text("consentito", x=50, y=70)
                 await asyncio.sleep(2)
                 self.state = Animation.ANIMATION
+            elif st == Animation.CHECK_PERMISSION:
+                self.oled.display.fill(0)
+                self.oled.show_text("Validazione", x=30, y=30)
+                self.oled.show_text("in corso...", x=30, y=70)
+                await asyncio.sleep(1)
+                self.state = Animation.ANIMATION
             else:
                 # stato sconosciuto: torna ad animazione
                 self.state = Animation.ANIMATION
             await asyncio.sleep_ms(1000)
+
+

@@ -725,12 +725,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
+        "x": 80,
         "y": 40,
         "wires": [
             [
-                "aa3a5d7c4a94af1e",
-                "945b5806aa981b40"
+                "9e8d98d7cde3a4d4"
             ]
         ]
     },
@@ -926,6 +925,27 @@
         "x": 760,
         "y": 260,
         "wires": []
+    },
+    {
+        "id": "9e8d98d7cde3a4d4",
+        "type": "function",
+        "z": "47f835d6bae6e30e",
+        "name": "FiltroMessaggi",
+        "func": "const debounceTime = 3000; // millisecondi = 3 secondi\nconst currentKey = msg.payload;\nconst lastKey = context.get(\"lastKey\") || null;\nconst lastTime = context.get(\"lastTime\") || 0;\nconst now = Date.now();\n\nif (currentKey !== lastKey || now - lastTime > debounceTime) {\n    context.set(\"lastKey\", currentKey);\n    context.set(\"lastTime\", now);\n    return msg; // passa il messaggio\n} else {\n    return null; // scarta messaggi duplicati troppo vicini\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 40,
+        "wires": [
+            [
+                "aa3a5d7c4a94af1e",
+                "945b5806aa981b40"
+            ]
+        ]
     },
     {
         "id": "2cd2e43387546614",

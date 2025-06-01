@@ -20,7 +20,7 @@ from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
 AIO_USER = 'paolo32v'         
-AIO_KEY = 'aio_lqpB22ufap5A7tU9WLqKp2zhgXLH'
+AIO_KEY = 'aio_eZXE00aD9SoiDpAUhBrCmbxfTtJ3'
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -41,6 +41,9 @@ subscriptions_list = [DHT_TOPIC_SET_MAX, CHECK_NFC_TOPIC, SHUTTER_TOPIC, ALARM_T
 client = None
 msg_queue = deque((), 30)
 broker_connected = False
+
+last_uid_time = 0
+last_uid_read = None
 
 # Access report info
 entry_time         = None
@@ -90,13 +93,20 @@ queue_lock = allocate_lock()
 
 # Event callbacks
 def on_nfc(uid_str):
-    global shutter_state, current_uid
+    global shutter_state, current_uid, last_uid_time, last_uid_read
+
+    now = utime.ticks_ms()
+    if uid_str == last_uid_read and utime.ticks_diff(now, last_uid_time) < 4000:  # 3 secondi di debounce
+        print("UID ripetuto ignorato")
+        return
     print("UID: ", uid_str)
     if shutter_state != 'closed':
         print("not closed")
         return
 
     if not car_in_garage and uid_str is not None:
+        animation.set_state(Animation.CHECK_PERMISSION)
+        utime.sleep(0.5)
         current_uid = uid_str
         msg = ujson.dumps({
             "uid": uid_str
@@ -106,7 +116,6 @@ def on_nfc(uid_str):
 
 
 def on_car_near(is_near):
-    global car_in_garage
     with state_lock:
         if shutter_state == 'closed':
             if not is_near:
@@ -174,22 +183,23 @@ def dht_handler(msg):
 
 def nfc_handler(msg):
     global  shutter_state, current_uid, authorized_to_open
-    msg = msg.decode()
-
-    print("msg nfc: ", msg)
-    if msg == "1":
-        print("autorizzato")
-        animation.set_state(Animation.ACCESS_ALLOWED)
-        amp.play('access_allowed.wav')
-        authorized_to_open = True
-        with state_lock:
-            shutter_state = 'opening'
-    else:
-        print("non autorizzato")
-        animation.set_state(Animation.ACCESS_DENIED)
-        amp.play('access_denied.wav')
-        authorized_to_open = False
-        current_uid = None
+    
+    if shutter_state == 'closed':
+        msg = msg.decode()
+        print("msg nfc: ", msg)
+        if msg == "1":
+            print("autorizzato")
+            animation.set_state(Animation.ACCESS_ALLOWED)
+            amp.play('access_allowed.wav')
+            authorized_to_open = True
+            with state_lock:
+                shutter_state = 'opening'
+        else:
+            print("non autorizzato")
+            animation.set_state(Animation.ACCESS_DENIED)
+            amp.play('access_denied.wav')
+            authorized_to_open = False
+            current_uid = None
 
 
 # MQTT messages callback
@@ -438,7 +448,7 @@ def init_sliders():
 async def main():
     global client, broker_connected
 
-    asyncio.create_task(nfc.monitor(on_nfc,                read_interval_s=2))
+    asyncio.create_task(nfc.monitor(on_nfc,                read_interval_s=4))
     asyncio.create_task(car_sensor.detect_obj(on_car_near, threshold_cm=6, interval_s=2))
     asyncio.create_task(obstacle_sensor.detect_obj(on_obstacle, threshold_cm=5, interval_s=1))
     asyncio.create_task(limit_switch.monitor(on_limit_change, interval_ms=200))
@@ -471,3 +481,6 @@ if __name__ == '__main__':
     _thread.start_new_thread(shutter_thread, ())
     init_sliders()
     asyncio.run(main())
+
+
+
