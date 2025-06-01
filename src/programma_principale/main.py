@@ -253,7 +253,8 @@ def get_current_time():
     """
     Ottiene data e ora e la restituisce nel formato AAAA-MM-GG HH:MM
     """
-    t = utime.localtime()
+    FUSO_ORARIO =  2 * 3600 # fuso orario italiano
+    t = utime.localtime(utime.time() + FUSO_ORARIO)
     return "{:04}-{:02}-{:02} {:02}:{:02}".format(t[0], t[1], t[2], t[3], t[4])
 
 # Hardware instantiation

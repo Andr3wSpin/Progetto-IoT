@@ -725,11 +725,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 80,
+        "x": 160,
         "y": 40,
         "wires": [
             [
-                "9e8d98d7cde3a4d4"
+                "aa3a5d7c4a94af1e",
+                "945b5806aa981b40"
             ]
         ]
     },
@@ -925,27 +926,6 @@
         "x": 760,
         "y": 260,
         "wires": []
-    },
-    {
-        "id": "9e8d98d7cde3a4d4",
-        "type": "function",
-        "z": "47f835d6bae6e30e",
-        "name": "FiltroMessaggi",
-        "func": "const debounceTime = 3000; // millisecondi = 3 secondi\nconst currentKey = msg.payload;\nconst lastKey = context.get(\"lastKey\") || null;\nconst lastTime = context.get(\"lastTime\") || 0;\nconst now = Date.now();\n\nif (currentKey !== lastKey || now - lastTime > debounceTime) {\n    context.set(\"lastKey\", currentKey);\n    context.set(\"lastTime\", now);\n    return msg; // passa il messaggio\n} else {\n    return null; // scarta messaggi duplicati troppo vicini\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 260,
-        "y": 40,
-        "wires": [
-            [
-                "aa3a5d7c4a94af1e",
-                "945b5806aa981b40"
-            ]
-        ]
     },
     {
         "id": "2cd2e43387546614",
@@ -1193,7 +1173,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "[{\"Ingresso\":\"25/05/2025 17:30\",\"Uscita\":\"25/05/2025 19:30\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 08:15\",\"Uscita\":\"26/05/2025 10:00\",\"UID\":\"AE231\"},{\"Ingresso\":\"26/05/2025 11:45\",\"Uscita\":\"26/05/2025 13:10\",\"UID\":\"BF842\"},{\"Ingresso\":\"27/05/2025 09:00\",\"Uscita\":\"27/05/2025 11:30\",\"UID\":\"CX150\"},{\"Ingresso\":\"27/05/2025 14:10\",\"Uscita\":\"27/05/2025 15:45\",\"UID\":\"AE231\"}]",
+        "payload": "[{\"ingresso\":\"25/05/2025 17:30\",\"uscita\":\"25/05/2025 19:30\",\"uid\":\"AE231\"},{\"ingresso\":\"26/05/2025 08:15\",\"uscita\":\"26/05/2025 10:00\",\"uid\":\"AE231\"},{\"ingresso\":\"26/05/2025 11:45\",\"uscita\":\"26/05/2025 13:10\",\"uid\":\"BF842\"},{\"ingresso\":\"27/05/2025 09:00\",\"uscita\":\"27/05/2025 11:30\",\"uid\":\"CX150\"},{\"ingresso\":\"27/05/2025 14:10\",\"uscita\":\"27/05/2025 15:45\",\"uid\":\"AE231\"}]",
         "payloadType": "json",
         "x": 110,
         "y": 460,
@@ -1208,7 +1188,7 @@
         "type": "function",
         "z": "e8602252ec8ae6cc",
         "name": "riempimento tabella",
-        "func": "let reportData = flow.get(\"reportTableData\") || [];\n\nif (Array.isArray(msg.payload)) {\n    reportData = msg.payload;\n} else if (typeof msg.payload === 'object') {\n    reportData.push(msg.payload);\n}\n\nflow.set(\"reportTableData\", reportData);\n\n// ⚠️ Qui forziamo un nuovo riferimento → la ui_table lo “vede” come nuovo array\nmsg.payload = JSON.parse(JSON.stringify(reportData));\nreturn msg;\n",
+        "func": "let reportData = flow.get(\"reportTableData\");\n\n// Se il payload è un array vuoto: resetta la tabella\nif (Array.isArray(msg.payload) && msg.payload.length === 0) {\n    reportData = [];\n    flow.set(\"reportTableData\", reportData);\n    msg.payload = reportData;\n    return msg;\n}\n\n// Se è un oggetto con uid, entry_time, exit_time\nlet {ingresso, uscita, uid } = msg.payload;\n// Trova se esiste già una riga con stesso uid e entry_time\nlet index = reportData.findIndex(row => row.uid === uid && row.ingresso === ingresso);\n\nif (index !== -1) {\n    // Aggiorna riga esistente\n    reportData[index].uscita = uscita;\n} else {\n    // Aggiungi nuova riga\n    reportData.push({ingresso, uscita, uid});\n}\n\nflow.set(\"tabreportTableDataleData\", reportData);\nmsg.payload = reportData;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1242,7 +1222,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"Ingresso\":\"29/05/2025 17:30\",\"Uscita\":\"29/05/2025 19:30\",\"UID\":\"TEST5\"}",
+        "payload": "{\"ingresso\":\"29/05/2025 17:30\",\"uscita\":\"29/05/2025 19:30\",\"uid\":\"TEST5\"}",
         "payloadType": "json",
         "x": 260,
         "y": 540,

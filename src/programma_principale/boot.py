@@ -1,7 +1,7 @@
 import utime
 from machine import reset
 import micropython
-
+import ntptime
 from wlan_config import wlan
 
 import esp
@@ -21,8 +21,6 @@ SDA_PIN = 37
 timeout = 10
 
 def restart():
-    #print("Impossibile connettersi al wifi. Riconessione in corso...")
-    oled.show_text("Impossibile connettersi al wifi.")
     utime.sleep(1)
     oled.display.fill(0)
     oled.show_text("Riconessione in corso...")
@@ -37,12 +35,14 @@ try:
     oled.show_text("Connessione in corso...")
     for _ in range(timeout):
         if wlan.isconnected():
-            #print("Connessione al wifi riuscita.")
             oled.display.fill(0)
-            oled.show_text("Connessione wifi riuscita.")
             break
         utime.sleep(1)
     else:
+        oled.show_text("Impossibile connettersi al wifi.")
         restart()
+    oled.show_text("Connessione wifi riuscita.")
+    ntptime.settime() # sincronizzazione data e ora
 except OSError as e:
+    oled.show_text("Impossibile connettersi al wifi.")
     restart()
