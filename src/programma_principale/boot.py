@@ -23,6 +23,9 @@ timeout = 10
 def restart():
     utime.sleep(1)
     oled.display.fill(0)
+    oled.show_text("Impossibile connettersi al wifi.")
+    utime.sleep(2)
+    oled.display.fill(0)
     oled.show_text("Riconessione in corso...")
     utime.sleep(2)
     reset()
@@ -39,10 +42,8 @@ try:
             break
         utime.sleep(1)
     else:
-        oled.show_text("Impossibile connettersi al wifi.")
         restart()
     oled.show_text("Connessione wifi riuscita.")
     ntptime.settime() # sincronizzazione data e ora
 except OSError as e:
-    oled.show_text("Impossibile connettersi al wifi.")
     restart()

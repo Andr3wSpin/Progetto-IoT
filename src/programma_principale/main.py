@@ -426,7 +426,10 @@ def connect_and_subscribe():
         client.subscribe(topic)
 
     broker_connected = True
-    print('Connessione al broker completata.')
+    oled.display.fill(0)
+    oled.show_text("Connesso al broker.")
+    utime.sleep(2)
+    oled.display.fill(0)
 
 
 def restart_and_reconnect():
@@ -435,6 +438,12 @@ def restart_and_reconnect():
     """
     utime.sleep(2)
     reset()
+
+
+def clear_report_table():
+    msg = ujson.dumps([])
+    with queue_lock:
+        msg_queue.append((REPORT_TOPIC, msg))
 
 
 def init_sliders():
@@ -470,17 +479,21 @@ async def main():
 
         await asyncio.sleep_ms(500)
 
-    print("Il dispositivo si è disconesso. Riconnessione in corso...")
+    oled.display.fill(0)
+    oled.show_text("Dispositivo disconnesso.", x=50, y=30)
+    oled.show_text("Riconnessione in corso...", x=50, y=70)
     restart_and_reconnect()
 
 if __name__ == '__main__':
     try:
         connect_and_subscribe()
     except OSError as e:
-        print('Errore durante la connessione con il broker MQTT. Riconessione in corso...')
+        oled.show_text("Impossibile connettersi al broker.", x=50, y=30)
+        oled.show_text("Riconnessione in corso...", x=50, y=70)
         restart_and_reconnect()
     _thread.start_new_thread(shutter_thread, ())
     init_sliders()
+    clear_report_table()
     asyncio.run(main())
 
 
