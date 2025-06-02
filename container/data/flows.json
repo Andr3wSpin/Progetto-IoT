@@ -40,12 +40,6 @@
         "env": []
     },
     {
-        "id": "e354f1ebb9edded8",
-        "type": "websocket-listener",
-        "path": "/audio",
-        "wholemsg": "false"
-    },
-    {
         "id": "4976286c874d8dae",
         "type": "mqtt-broker",
         "name": "AdaBroker",
@@ -1124,66 +1118,6 @@
         ]
     },
     {
-        "id": "632afdfa82b94a86",
-        "type": "inject",
-        "z": "e8602252ec8ae6cc",
-        "name": "Prova testo",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"stato_garage\":\"occupato\",\"stato_serranda\":\"chiusa\",\"stato_allarme\":\"disattivato\"}",
-        "payloadType": "json",
-        "x": 170,
-        "y": 260,
-        "wires": [
-            [
-                "03295a4333285638",
-                "9cefa92280264cda",
-                "9438f4b5b2059459"
-            ]
-        ]
-    },
-    {
-        "id": "04ab1db7314b3712",
-        "type": "inject",
-        "z": "e8602252ec8ae6cc",
-        "name": "Prova report ",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "[{\"ingresso\":\"25/05/2025 17:30\",\"uscita\":\"25/05/2025 19:30\",\"uid\":\"AE231\"},{\"ingresso\":\"26/05/2025 08:15\",\"uscita\":\"26/05/2025 10:00\",\"uid\":\"AE231\"},{\"ingresso\":\"26/05/2025 11:45\",\"uscita\":\"26/05/2025 13:10\",\"uid\":\"BF842\"},{\"ingresso\":\"27/05/2025 09:00\",\"uscita\":\"27/05/2025 11:30\",\"uid\":\"CX150\"},{\"ingresso\":\"27/05/2025 14:10\",\"uscita\":\"27/05/2025 15:45\",\"uid\":\"AE231\"}]",
-        "payloadType": "json",
-        "x": 110,
-        "y": 460,
-        "wires": [
-            [
-                "a9adceb96bafc2a6"
-            ]
-        ]
-    },
-    {
         "id": "a9adceb96bafc2a6",
         "type": "function",
         "z": "e8602252ec8ae6cc",
@@ -1197,64 +1131,6 @@
         "libs": [],
         "x": 370,
         "y": 380,
-        "wires": [
-            [
-                "f88e27db10c25ad6"
-            ]
-        ]
-    },
-    {
-        "id": "e5b44bbf8e002557",
-        "type": "inject",
-        "z": "e8602252ec8ae6cc",
-        "name": "Prova inserimento nuova riga",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"ingresso\":\"29/05/2025 17:30\",\"uscita\":\"29/05/2025 19:30\",\"uid\":\"TEST5\"}",
-        "payloadType": "json",
-        "x": 260,
-        "y": 540,
-        "wires": [
-            [
-                "a9adceb96bafc2a6"
-            ]
-        ]
-    },
-    {
-        "id": "f13a65682b009b7e",
-        "type": "inject",
-        "z": "e8602252ec8ae6cc",
-        "name": "Pulizia tabella",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "[]",
-        "payloadType": "json",
-        "x": 570,
-        "y": 480,
         "wires": [
             [
                 "f88e27db10c25ad6"
