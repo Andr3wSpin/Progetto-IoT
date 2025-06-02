@@ -23,10 +23,13 @@ timeout = 10
 def restart():
     utime.sleep(1)
     oled.display.fill(0)
-    oled.show_text("Impossibile connettersi al wifi.")
+    oled.show_text("Impossibile")
+    oled.show_text("connettersi a .",x=50,y=70)
+    oled.show_text(f"{WIFI_SSID}.",x=50,y=90)
     utime.sleep(2)
     oled.display.fill(0)
-    oled.show_text("Riconessione in corso...")
+    oled.show_text("Riconessione")
+    oled.show_text("in corso...")
     utime.sleep(2)
     reset()
 
@@ -35,7 +38,8 @@ oled = DisplayUI(scl_pin=SCL_PIN, sda_pin=SDA_PIN)
 wlan.active(True)
 try:
     wlan.connect(WIFI_SSID, WIFI_PASSWORD)
-    oled.show_text("Connessione in corso...")
+    oled.show_text("Connessione")
+    oled.show_text("in corso...",x=50,y=70)
     for _ in range(timeout):
         if wlan.isconnected():
             oled.display.fill(0)
@@ -43,7 +47,9 @@ try:
         utime.sleep(1)
     else:
         restart()
-    oled.show_text("Connessione wifi riuscita.")
+    oled.show_text("Connesso a ")
+    oled.show_text(f"{WIFI_SSID}",x=50,y=70)
     ntptime.settime() # sincronizzazione data e ora
 except OSError as e:
     restart()
+

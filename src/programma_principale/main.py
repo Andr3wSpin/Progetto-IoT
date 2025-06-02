@@ -19,8 +19,8 @@ from STEP_MOTOR_FULL import STEP_MOTOR_FULL
 from STOPLIGHT       import Stoplight
 
 # Adafruit IO settings
-AIO_USER = 'paolo32v'         
-AIO_KEY = 'kkkkk'
+AIO_USER = ''         
+AIO_KEY = ''
 BROKER = 'io.adafruit.com'
 PORT = 1883
 
@@ -116,6 +116,7 @@ def on_nfc(uid_str):
 
 
 def on_car_near(is_near):
+    global car_in_garage
     with state_lock:
         if shutter_state == 'closed':
             if not is_near:
@@ -495,6 +496,8 @@ if __name__ == '__main__':
     init_sliders()
     clear_report_table()
     asyncio.run(main())
+
+
 
 
 
