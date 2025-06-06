@@ -82,6 +82,7 @@ class HCSR04:
         while True:
             try:
                 distanza = self.distance_cm()
+                print("distanza:", distanza)
                 if distanza < 0:
                     distanza = self.MAX_DISTANCE_CM
                 callback(distanza < threshold_cm)
